@@ -13,6 +13,18 @@
         <h3>Просрочено</h3>
         <h4>{{ countByStatus.c3 }}</h4>
 
+
+        <div>
+            <l-map style="height:50vh" ref="map" v-model:zoom="zoom" :center="[43.238482,76.944987]">
+                <l-tile-layer 
+                    url="https:////{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    layer-type="base"
+                    name="OpenStreetMap"
+                ></l-tile-layer>
+                <l-marker  :lat-lng="[43.238482,76.944987]"></l-marker>
+                <l-geo-json :geojson="geojson" :options="geojsonOptions" />
+            </l-map>
+        </div>
         <br>
         <div v-for="org in countByOrg" :key="org.name">
             <div>
@@ -48,24 +60,50 @@
 </template>
 
 <script>
+    import "leaflet/dist/leaflet.css"
+    import { LMap, LGeoJson, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+//{s}.tile.openstreetmap.org
+
+//tilessputnik.ru
+//https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/
     export default {
         name: "Dashboard",
+        components: {
+            
+                LMap,
+                LGeoJson,
+                LTileLayer,
+                LMarker
+        },
 
         data() {
             return {
                 loading: false,
+                zoom:11,
                 yesterday: 0,
                 countByStatus: {},
                 countByOrg: {},
                 countByStaff: {},
-                mobile: {}
+                mobile: {},
+                geojson: null,
+                geojsonOptions: {
+                    // Options that don't rely on Leaflet methods.
+                },
             }
         },
 
-        
+        async beforeMount() {
+            // HERE is where to load Leaflet components!
+            const { circleMarker } = await import("leaflet/dist/leaflet-src.esm");
+
+            // And now the Leaflet circleMarker function can be used by the options:
+            this.geojsonOptions.pointToLayer = (feature, latLng) =>
+            circleMarker(latLng, { radius: 8 });
+            this.mapIsReady = true;
+        },
 
          methods: {
-             hadndleData(){
+             async hadndleData(){
                  this.loading = true
                  var user = this.$store.state.auth.user
                  console.log(user)
