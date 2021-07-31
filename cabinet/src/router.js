@@ -1,23 +1,20 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "@/components/Home.vue";
-import Login from "@/components/Login.vue";
-import Register from "@/components/Register.vue";
-// lazy-loaded
-const Profile = () => import("@/components/Profile.vue")
-const BoardAdmin = () => import("@/components/BoardAdmin.vue")
-const BoardModerator = () => import("@/components/BoardModerator.vue")
-const BoardUser = () => import("@/components/BoardUser.vue")
+
+import Login from "@/components/Pages/Login.vue";
+import Register from "@/components/Pages/Register.vue";
+import Dashboard from "@/components/Pages/Dashboard";
+import Reports from "@/components/Pages/Reports";
+import Tasks from "@/components/Pages/Tasks";
+
+
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home,
+    name: "dashboard",
+    component: Dashboard,
   },
-  {
-    path: "/home",
-    component: Home,
-  },
+ 
   {
     path: "/login",
     component: Login,
@@ -27,28 +24,24 @@ const routes = [
     component: Register,
   },
   {
-    path: "/profile",
-    name: "profile",
-    // lazy-loaded
-    component: Profile,
+    path: "/home",
+    name: "home",
+    component: Dashboard,
   },
   {
-    path: "/admin",
-    name: "admin",
-    // lazy-loaded
-    component: BoardAdmin,
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
   },
   {
-    path: "/mod",
-    name: "moderator",
-    // lazy-loaded
-    component: BoardModerator,
+    path: "/reports",
+    name: "reports",
+    component: Reports,
   },
   {
-    path: "/user",
-    name: "user",
-    // lazy-loaded
-    component: BoardUser,
+    path: "/tasks",
+    name: "tasks",
+    component: Tasks,
   },
 ];
 
@@ -59,7 +52,7 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home'];
+    const publicPages = ['/login', '/register'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
   

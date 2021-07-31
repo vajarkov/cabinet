@@ -4,7 +4,7 @@ import authHeader from "@/services/auth-header";
 const API_URL = "http://192.168.1.181/web/" //http://api.ksu.vashdomofon.kz/"
 
 class userService {
-    getPublicContent() {
+    /* getPublicContent() {
         return axios.get(API_URL + "all")
     }
 
@@ -18,7 +18,7 @@ class userService {
 
     getAdminBoard() {
         return axios.get(API_URL + "admin", { headers: authHeader() })
-    }
+    } */
 }
 
 export default new userService()

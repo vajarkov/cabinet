@@ -1,13 +1,13 @@
 import axios from 'axios'
 import * as sha256 from 'sha256'
 
-const API_URL = 'http://192.168.1.181/web/'//'http://api.ksu.vashdomofon.kz/web/'
+const API_URL = 'http://api.ksu.vashdomofon.kz/web/' //'http://192.168.1.181/web/' //  //
 
 class AuthService {
     login(user){
         //pass = ssh
         return axios.post(API_URL + "login", {
-            username: user.username,
+            mail: user.username,
             password: sha256.default(user.password)
         })
         .then(response => {

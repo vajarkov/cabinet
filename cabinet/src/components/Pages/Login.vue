@@ -65,7 +65,7 @@ export default {
 
     created() {
         if (this.loggedIn){
-            this.$router.push("/profile")
+            this.$router.push("/dashboard")
         }
     },
 
@@ -76,7 +76,7 @@ export default {
             this.$store.dispatch("auth/login", user).then(
                 () => {
                     console.log(user);
-                    this.$router.push("/profile");
+                    this.$router.push("/dashboard");
                 },
                 (error) => {
                     console.log(error);
