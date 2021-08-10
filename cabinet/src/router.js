@@ -5,6 +5,7 @@ import Register from "@/components/Pages/Register.vue";
 import Dashboard from "@/components/Pages/Dashboard";
 import Reports from "@/components/Pages/Reports";
 import Tasks from "@/components/Pages/Tasks";
+import Staff from "@/components/Pages/Staff";
 
 
 
@@ -42,6 +43,11 @@ const routes = [
     path: "/tasks",
     name: "tasks",
     component: Tasks,
+  },
+  {
+    path: "/reports/staff",
+    name: "staff",
+    component: Staff,
   },
 ];
 

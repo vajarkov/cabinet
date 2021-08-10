@@ -1,8 +1,8 @@
 import axios from 'axios'
-import authHeader from "@/services/auth-header";
+//import authHeader from "@/services/auth-header";
 
 
-const API_URL =  'http://api.ksu.vashdomofon.kz/'// 'http://192.168.1.181/' //
+const API_URL = 'http://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // // 'http://api.ksu.vashdomofon.kz/'//  //
 
 class DashboardService {
     yesterday(key){
@@ -24,7 +24,7 @@ class DashboardService {
 
     countByOrg(key){
         
-        return axios.get(API_URL + "reports/request/count/by/org?key="+key)
+        return axios.get(API_URL + "reports/request/org?key="+key)
         .then(response => {
             return response.data
         })
@@ -41,7 +41,7 @@ class DashboardService {
 
     Mobile(key) {
         
-        return axios.get(API_URL + "mobile?key=" + key, { headers: authHeader() } )
+        return axios.get(API_URL + "mobile?key=" + key )
         .then(response => {
             return response.data
         })

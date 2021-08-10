@@ -12,16 +12,10 @@
 <script>
 import NavBar from '@/components/NavBar'
 import Panel from "@/components/Panel"
-
 export default {
   components: {
     NavBar,
     Panel
-  },
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    }
   }
 }
 </script>

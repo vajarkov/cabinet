@@ -21,7 +21,10 @@
                     layer-type="base"
                     name="OpenStreetMap"
                 ></l-tile-layer>
-                <l-marker  :lat-lng="[43.238482,76.944987]"></l-marker>
+                <l-marker  v-for="phone in mobile" :key="phone.id" :lat-lng="phone.location" :title="phone.NAME">
+                    <l-tooltip>{{ phone.NAME }}</l-tooltip>
+                    
+                </l-marker>
                 <l-geo-json :geojson="geojson" :options="geojsonOptions" />
             </l-map>
         </div>
@@ -32,7 +35,8 @@
                 <h4>Новые: {{ org.incoming }}</h4>
                 <h4>В работе: {{ org.work }}</h4>
                 <h4>Выполненые: {{ org.done }}</h4>
-                <h4>Отклоненные: {{ org.rejected }}</h4>
+                <h4>Отложенные: {{ org.rejected }}</h4>
+                <h4>Со вчера: {{ org.yesterday }}</h4>
             </div>
         </div>
         <br>
@@ -61,7 +65,8 @@
 
 <script>
     import "leaflet/dist/leaflet.css"
-    import { LMap, LGeoJson, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+    import {  LTooltip,LMap, LGeoJson, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+
 //{s}.tile.openstreetmap.org
 
 //tilessputnik.ru
@@ -69,11 +74,11 @@
     export default {
         name: "Dashboard",
         components: {
-            
                 LMap,
                 LGeoJson,
                 LTileLayer,
-                LMarker
+                LMarker,
+                LTooltip
         },
 
         data() {
@@ -103,7 +108,43 @@
         },
 
          methods: {
-             async hadndleData(){
+           
+            initMarkers(){
+                this.loading = true
+                var user = this.$store.state.auth.user
+                this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
+                     (data) => {
+                        console.log(data)
+                        this.mobile = data.phones
+                        this.mobile.forEach(phone => {
+                            let location = ([phone.ltd,phone.lng])
+                            phone.location = location
+                            //var layerGroup = L.layerGroup()
+                            //layerGroup.addLayer(marker)
+                            //palce
+                        },
+                        () =>{
+                            console.log("error")
+                        })
+                         
+                        console.log(this.mobile)
+                        this.loading = false
+
+                     },
+                     (error) => {
+                        this.message =
+                            (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        this.successful = false;
+                        this.loading = false;
+                        }
+
+                 )
+            },
+            async handleData(){
                  this.loading = true
                  var user = this.$store.state.auth.user
                  console.log(user)
@@ -111,6 +152,7 @@
                      (data) => {
                          console.log(data)
                          this.yesterday = data.allCount
+                         this.loading = false
                      },
                      (error) => {
                         this.message =
@@ -127,6 +169,7 @@
                     (data) => {
                          console.log(data)
                          this.countByStatus = data.count
+                         this.loading = false
                      },
                      (error) => {
                         this.message =
@@ -145,6 +188,7 @@
                     (data) => {
                          console.log(data)
                          this.countByOrg = data.items
+                         this.loading = false
                      },
                      (error) => {
                         this.message =
@@ -163,6 +207,7 @@
                      (data) => {
                          console.log(data)
                          this.countByStaff = data.data
+                         this.loading = false
                      },
                      (error) => {
                         this.message =
@@ -178,29 +223,14 @@
                  )
 
 
-                 this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
-                     (data) => {
-                         console.log(data)
-                         this.mobile = data.phones
-                     },
-                     (error) => {
-                        this.message =
-                            (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.successful = false;
-                        this.loading = false;
-                        }
-
-                 )
+                 
              }
          },
 
         mounted() {
             document.title = "КСУ Доска"
-            this.hadndleData();
+            this.handleData();
+            this.initMarkers();
             
          },
          
