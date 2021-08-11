@@ -16,12 +16,20 @@ class ReportsService {
 
 
     ReportView(key, date, id){
-        console.log(date)
-        console.log(id)
         return axios.get(API_URL +"mobile/report/" + date + "/" + id + "?key=" + key)
         .then(response => {
             return response.data
         })
+    }
+
+    RequestCount(end, start, key) {
+        console.log(key)
+        console.log(start)
+        console.log(end)
+        return axios.get(API_URL + "request/counts?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
     }
 
     

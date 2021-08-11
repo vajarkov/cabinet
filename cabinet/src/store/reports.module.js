@@ -8,7 +8,8 @@ export const reports = {
     state: {
        
         phones: {},
-        data: {}        
+        data: {},
+        counts: {},       
     },
 
     actions: {
@@ -40,6 +41,22 @@ export const reports = {
                     return Promise.reject(error)
                 }
             ) 
+        },
+
+        RequestCount({commit}, json){
+            console.log(json.start)
+            console.log(json.end);
+            console.log(json.key);
+            return reportsService.RequestCount(json.end, json.start, json.key).then(
+                counts => {
+                    console.log(counts)
+                    commit('RequestCount', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
         }
     },
 
@@ -51,6 +68,9 @@ export const reports = {
         ReportView(state, data) {
             state.data = data
             
-        }
+        },
+        RequestCount(state, counts){
+            state.counts = counts
+        },
     }
 }

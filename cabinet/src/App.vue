@@ -16,6 +16,11 @@ export default {
   components: {
     NavBar,
     Panel
+  },
+  computed: {
+    currentUser(){
+      return this.$store.state.auth.user;
+    }
   }
 }
 </script>

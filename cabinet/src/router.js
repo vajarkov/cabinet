@@ -6,6 +6,7 @@ import Dashboard from "@/components/Pages/Dashboard";
 import Reports from "@/components/Pages/Reports";
 import Tasks from "@/components/Pages/Tasks";
 import Staff from "@/components/Pages/Staff";
+import Requests from "@/components/Pages/Requests";
 
 
 
@@ -48,6 +49,11 @@ const routes = [
     path: "/reports/staff",
     name: "staff",
     component: Staff,
+  },
+  {
+    path: "/reports/requests",
+    name: "requests",
+    component: Requests,
   },
 ];
 

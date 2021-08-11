@@ -32,9 +32,11 @@
                     layer-type="base"
                     name="OpenStreetMap"
                 ></l-tile-layer>
-                <l-polyline v-if="marker" :latLngs="distance" ></l-polyline>
-                <l-marker v-if="marker" :lat-lng="marker.location" :title="marker.NAME">
-                    <l-tooltip v-if="marker">{{ marker.NAME }}</l-tooltip>
+                <l-polyline v-if="Object.keys(distance).length !== 0" :lat-lngs="distance" color="green"></l-polyline>
+               
+                <!-- <l-polygon v-if="Object.keys(distance).length !== 0" :lat-lngs="distance"></l-polygon> -->
+                <l-marker v-if="Object.keys(marker).length !== 0" :lat-lng="marker.location" :title="marker.NAME">
+                    <l-tooltip v-if="Object.keys(marker).length !== 0">{{ marker.NAME }}</l-tooltip>
                      
                 </l-marker> 
                 <l-geo-json :geojson="geojson" :options="geojsonOptions" />
@@ -51,7 +53,7 @@
           <h2>{{ marker.NAME }}</h2>
           <h4>Дата последней регистрации</h4>
           <h4>{{ marker.stamp }}</h4>
-          <h4>Пройденное расстояние за {{ date.toISOString() }}</h4>
+          <h4>Пройденное расстояние за {{ date.toString() }}</h4>
           <h4>{{ data.distance }} км</h4>
           <h4>Время в пути</h4>
           <h4>{{ timePeriod.toFixed(2) }} мин.</h4>
@@ -71,7 +73,8 @@
                 LGeoJson, 
                 LTileLayer,
                 LMarker, 
-                LPolyline
+                LPolyline,
+                //LPolygon
                 } 
                 from "@vue-leaflet/vue-leaflet";
     
@@ -81,7 +84,7 @@
             return {
                 mobile: {},
                 zoom:11,
-                date: new Date(),
+                date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
                 marker: {},
                 data:{},
                 distance:[],
@@ -98,7 +101,8 @@
                 LTileLayer,
                 LMarker,
                 LTooltip,
-                LPolyline
+                LPolyline,
+               // LPolygon
         },
         methods: {
              initMarkers(){
@@ -111,14 +115,10 @@
                         this.mobile.forEach(phone => {
                             let location = ([phone.ltd,phone.lng])
                             phone.location = location
-                            //this.marker = phone;
-                            //console.log(this.marker);
-                            //console.log(phone);
-                            //var layerGroup = L.layerGroup()
-                            //layerGroup.addLayer(marker)
-                            //palce
+                        
                         },
                         () =>{
+
                             console.log("error")
                         })
                          
@@ -141,30 +141,27 @@
             },
 
 
-            addMarker(event){
-                console.log("11111")
-                console.log(event);
-                //console.log(this.marker);
+            addMarker(){
+                this.clearData();
+                
+            },
+
+            clearData(){
                 this.timePeriod = 0
                 this.data.distance = 0
-                console.log(this.timePeriod)
-                console.log(this.distance)
-                //this.data.distance = 0
-                //this.marker = phone;
-                //console.log(this.parker);
-                //console.log(phone)
+                while(this.distance.length)
+                {
+                    this.distance.pop();
+                }
+                this.distance.length = 0;
             },
             reportView(){
-                alert(this.date)
-                console.log("2222222");
-                console.log(this.date)
-                console.log(Math.round(this.date.getTime()))
-                console.log(this.marker)
-                console.log(this.marker.id)
+                
                 this.loading = true
                 var user = this.$store.state.auth.user
                 var date = Math.round(this.date.getTime())
                 var id = this.marker.id
+                this.clearData();
                 this.$store.dispatch('reports/ReportView', {key:user.session.client.key, date:date, id:id}).then(
                     (data) => 
                     {   console.log(data)
@@ -174,22 +171,15 @@
                         this.distance.push([parseFloat(item.coord.ltd), parseFloat(item.coord.lng)]);
                         if(item.action === "MOVE")
                             this.timePeriod += item.period;
-                            //phone.location = location
-                            //this.marker = phone;
-                        //console.log(this.distance)
-                        console.log(this.distance);
-                        console.log(this.timePeriod);
-                            //var layerGroup = L.layerGroup()
-                            //layerGroup.addLayer(marker)
-                            //palce
                         
                         })
                     },
                     () => {
+                        alert("Данных за выбранное число нет в базе")
                         console.log("error")
                         }
                     )
-                //console.log(this.mobile)
+                
                 this.loading = false
             },
         },    
@@ -200,7 +190,7 @@
         
         mounted() {
             document.title = "КСУ Отчет по сервисникам"
-            //this.handleData();
+            
             this.initMarkers();
             
          },

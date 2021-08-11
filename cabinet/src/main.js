@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import VCalendar from 'v-calendar';
 import { FontAwesomeIcon } from "@/plugins/font-awesome"
+import Moveable from '@gabojkz/vue_moveable_v3';
 
 
 
@@ -14,6 +15,7 @@ import { FontAwesomeIcon } from "@/plugins/font-awesome"
 createApp(App)
     .use(router)
     .use(store)
+    .use(Moveable)
     .use(VCalendar, {})
     .component("font-awesome-icon", FontAwesomeIcon)    
     .mount('#app')
