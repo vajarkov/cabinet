@@ -6,7 +6,11 @@
 
 <script>
     export default {
-        name: "Tasks"
+        name: "Tasks",
+
+        mounted () {
+        document.title = "КСУ Задачник"
+    },
     }
 </script>
 

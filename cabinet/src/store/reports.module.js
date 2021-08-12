@@ -9,7 +9,10 @@ export const reports = {
        
         phones: {},
         data: {},
-        counts: {},       
+        counts: {},
+        payments: {},
+        org: {}, 
+        pays: {},      
     },
 
     actions: {
@@ -57,7 +60,50 @@ export const reports = {
                     return Promise.reject(error)
                 }
             ) 
-        }
+        },
+
+        Payments({commit}, key) {
+            return reportsService.Payments(key).then(
+                payments => {
+                    console.log(payments)
+                    commit('Payments', payments)
+                    return Promise.resolve(payments)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Org({commit}, key) {
+            return reportsService.Org(key).then(
+                org => {
+                    console.log(org)
+                    commit('Org', org)
+                    return Promise.resolve(org)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        getPayments({commit}, json) {
+            console.log(json.id)
+            console.log(json.start)
+            console.log(json.end);
+            console.log(json.key);
+            return reportsService.getPayments(json.id, json.start, json.end, json.key).then(
+                pays => {
+                    console.log(pays)
+                    commit('getPayments', pays)
+                    return Promise.resolve(pays)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        } 
     },
 
     mutations:{
@@ -72,5 +118,16 @@ export const reports = {
         RequestCount(state, counts){
             state.counts = counts
         },
+        Payments(state, payments){
+            state.payments = payments
+        },
+        Org(state, org) {
+            state.org = org
+        },
+        getPayments(state, pays) {
+            state.pays = pays
+        },
+        
+    
     }
 }

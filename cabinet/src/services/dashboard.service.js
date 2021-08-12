@@ -2,7 +2,7 @@ import axios from 'axios'
 //import authHeader from "@/services/auth-header";
 
 
-const API_URL = 'http://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // // 'http://api.ksu.vashdomofon.kz/'//  //
+const API_URL = 'https://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // // 'https://api.ksu.vashdomofon.kz/'//  //
 
 class DashboardService {
     yesterday(key){

@@ -7,7 +7,7 @@ import Reports from "@/components/Pages/Reports";
 import Tasks from "@/components/Pages/Tasks";
 import Staff from "@/components/Pages/Staff";
 import Requests from "@/components/Pages/Requests";
-
+import Payments from "@/components/Pages/Payments";
 
 
 const routes = [
@@ -54,6 +54,11 @@ const routes = [
     path: "/reports/requests",
     name: "requests",
     component: Requests,
+  },
+  {
+    path: "/reports/payments",
+    name: "payments",
+    component: Payments,
   },
 ];
 

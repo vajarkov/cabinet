@@ -189,7 +189,7 @@
             
         
         mounted() {
-            document.title = "КСУ Отчет по сервисникам"
+            document.title = "КСУ Отчет по мастерам"
             
             this.initMarkers();
             

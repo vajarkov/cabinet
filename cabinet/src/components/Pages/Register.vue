@@ -91,6 +91,7 @@ export default {
     },
   },
   mounted() {
+    document.title = "КСУ Регистрация"
     if (this.loggedIn) {
       this.$router.push("/dashboard");
     }
