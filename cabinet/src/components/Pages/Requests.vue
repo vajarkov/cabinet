@@ -170,10 +170,18 @@
                        
       
                     },
-                    () => {
+                   (error) => {
                         alert("Данных за выбранное число нет в базе")
-                        console.log("error")
-                    }
+                        this.message =
+                            (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        this.successful = false;
+                        this.loading = false;
+                        console.log(this.message)
+                        }
                 )
                 this.loading = false
             },

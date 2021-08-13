@@ -7,7 +7,6 @@ const API_URL = 'https://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // 
 class ReportsService {
    
     Mobile(key) {
-        
         return axios.get(API_URL + "mobile?key=" + key )
         .then(response => {
             return response.data
@@ -23,9 +22,6 @@ class ReportsService {
     }
 
     RequestCount(end, start, key) {
-        console.log(key)
-        console.log(start)
-        console.log(end)
         return axios.get(API_URL + "request/counts?to=" + end + "&from=" + start + "&key=" + key)
         .then(response => {
             return response.data
@@ -41,7 +37,6 @@ class ReportsService {
     }
 
     Org(key) {
-        console.log(key)
         return axios.get(API_URL + "org?key=" + key)
         .then(response => {
             return response.data
@@ -49,14 +44,17 @@ class ReportsService {
     }
 
     getPayments(id, start, end, key) {
-        console.log(id)
-        console.log(start)
-        console.log(end)
-        console.log(key)
         return axios.get(API_URL + "reports/kontragent/org/" + id + "/" + start + "/" + end + "?key=" + key)
         .then(response => {
             return response.data
         }) 
+    }
+
+    pastDue(key) {
+        return axios.get(API_URL + "reports/request/pastdue?key=" + key)
+        .then(response => {
+            return response.data
+        })
     }
 
     

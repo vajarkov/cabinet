@@ -12,7 +12,8 @@ export const reports = {
         counts: {},
         payments: {},
         org: {}, 
-        pays: {},      
+        pays: {}, 
+        pastdue: {},     
     },
 
     actions: {
@@ -20,7 +21,6 @@ export const reports = {
         Mobile({commit}, key) {
             return reportsService.Mobile(key).then(
                 mobile => {
-                    console.log(mobile)
                     commit('Mobile', mobile)
                     return Promise.resolve(mobile)
                 },
@@ -31,12 +31,8 @@ export const reports = {
         },
 
         ReportView({commit}, json){
-            console.log(json.key)
-            console.log(json.date);
-            console.log(json.id);
             return reportsService.ReportView(json.key, json.date, json.id).then(
                 data => {
-                    console.log(data)
                     commit('ReportView', data)
                     return Promise.resolve(data)
                 },
@@ -47,12 +43,8 @@ export const reports = {
         },
 
         RequestCount({commit}, json){
-            console.log(json.start)
-            console.log(json.end);
-            console.log(json.key);
             return reportsService.RequestCount(json.end, json.start, json.key).then(
                 counts => {
-                    console.log(counts)
                     commit('RequestCount', counts)
                     return Promise.resolve(counts)
                 },
@@ -65,7 +57,6 @@ export const reports = {
         Payments({commit}, key) {
             return reportsService.Payments(key).then(
                 payments => {
-                    console.log(payments)
                     commit('Payments', payments)
                     return Promise.resolve(payments)
                 },
@@ -78,7 +69,6 @@ export const reports = {
         Org({commit}, key) {
             return reportsService.Org(key).then(
                 org => {
-                    console.log(org)
                     commit('Org', org)
                     return Promise.resolve(org)
                 },
@@ -89,13 +79,8 @@ export const reports = {
         },
 
         getPayments({commit}, json) {
-            console.log(json.id)
-            console.log(json.start)
-            console.log(json.end);
-            console.log(json.key);
             return reportsService.getPayments(json.id, json.start, json.end, json.key).then(
                 pays => {
-                    console.log(pays)
                     commit('getPayments', pays)
                     return Promise.resolve(pays)
                 },
@@ -103,7 +88,19 @@ export const reports = {
                     return Promise.reject(error)
                 }
             )
-        } 
+        },
+        
+        pastDue({commit}, key) {
+            return reportsService.pastDue(key).then(
+                pastdue => {
+                    commit('pastDue', pastdue)
+                    return Promise.resolve(pastdue)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        }
     },
 
     mutations:{
@@ -127,6 +124,9 @@ export const reports = {
         getPayments(state, pays) {
             state.pays = pays
         },
+        pastDue(state, pastdue) {
+            state.pastdue = pastdue
+        }
         
     
     }

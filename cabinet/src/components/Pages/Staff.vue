@@ -110,7 +110,7 @@
                 var user = this.$store.state.auth.user
                 this.$store.dispatch('reports/Mobile', user.session.client.key).then(
                      (data) => {
-                        console.log(data)
+                        //console.log(data)
                         this.mobile = data.phones
                         this.mobile.forEach(phone => {
                             let location = ([phone.ltd,phone.lng])
@@ -135,6 +135,7 @@
                             error.toString();
                         this.successful = false;
                         this.loading = false;
+                        console.log(this.message)
                         }
 
                  )
@@ -164,7 +165,7 @@
                 this.clearData();
                 this.$store.dispatch('reports/ReportView', {key:user.session.client.key, date:date, id:id}).then(
                     (data) => 
-                    {   console.log(data)
+                    {   //console.log(data)
                         this.data = data
                         this.data.detail.forEach(item => {
                         console.log(item)
@@ -174,9 +175,17 @@
                         
                         })
                     },
-                    () => {
+                    (error) => {
                         alert("Данных за выбранное число нет в базе")
-                        console.log("error")
+                        this.message =
+                            (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        this.successful = false;
+                        this.loading = false;
+                        console.log(this.message)
                         }
                     )
                 
