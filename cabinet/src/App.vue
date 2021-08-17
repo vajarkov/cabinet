@@ -21,12 +21,17 @@ export default {
     currentUser(){
       return this.$store.state.auth.user;
     }
-  }
+  },
+  mounted () {
+        document.title = "КСУ Личный кабинет"
+    },
 }
 </script>
 
-<style lang="scss">
-@import "~@/assets/scss/vendors/bootstrap-vue/index";
+<style>
+  body {
+    padding-top: 90px;
+  }
 
 
 </style>

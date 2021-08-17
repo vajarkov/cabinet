@@ -5,7 +5,7 @@
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
-        
+        alt="0"
       />
       <Form @submit="handleRegister" :validation-schema="schema">
         <div v-if="!successful">

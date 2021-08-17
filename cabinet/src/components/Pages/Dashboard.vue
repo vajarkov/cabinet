@@ -1,81 +1,147 @@
 <template>
     <div>
-        <h2>Dashboard</h2>
-        <h3>Со вчера</h3>
-        <h4>{{ yesterday }}</h4>
-        <br>
-        <h3>Принято</h3>
-        <h4>{{ countByStatus.c }}</h4>
-        <br>
-        <h3>Обработано</h3>
-        <h4>{{ countByStatus.c2 }}</h4>
-        <br>
-        <h3>Просрочено</h3>
-        <h4>{{ countByStatus.c3 }}</h4>
-
-
-        <div>
-            <l-map style="height:50vh" ref="map" v-model:zoom="zoom" :center="[43.238482,76.944987]">
-                <l-tile-layer 
-                    url="https:////{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    layer-type="base"
-                    name="OpenStreetMap"
-                ></l-tile-layer>
-                <l-marker  v-for="phone in mobile" :key="phone.id" :lat-lng="phone.location" :title="phone.NAME">
-                    <l-tooltip>{{ phone.NAME }}</l-tooltip>
-                    
-                </l-marker>
-                <l-geo-json :geojson="geojson" :options="geojsonOptions" />
-            </l-map>
-        </div>
-        <br>
-        <div v-for="org in countByOrg" :key="org.name">
-            <div>
-                <h3>{{org.name}}</h3>
-                <h4>Новые: {{ org.incoming }}</h4>
-                <h4>В работе: {{ org.work }}</h4>
-                <h4>Выполненые: {{ org.done }}</h4>
-                <h4>Отложенные: {{ org.rejected }}</h4>
-                <h4>Со вчера: {{ org.yesterday }}</h4>
+        
+        <i class="fs-1 bi-laptop"></i><span class="fs-3 ms-1 d-none d-lg-inline">Доска</span>
+         
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div v-show="yesterday" class="card mb-3 mx-0 py-0">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <i class="fs-1 bi-box-arrow-in-left"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <p class="card-title">Со вчера</p>
+                                <h4 class="card-text">{{ yesterday }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <i class="fs-1 bi-box-arrow-in-up-left" style="color: rgb(105, 168, 224);"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-title">Принято</p>
+                                <h4 class="card-text">{{ countByStatus.c }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <i class="fs-1 bi-check2-circle" style="color: rgb(136, 239, 45);"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-title">Обработано</p>
+                                <h4 class="card-text">{{ countByStatus.c2 }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <router-link to="/reports/pastdue">
+                                <i class="fs-1 bi-clock" style="color: rgb(193, 52, 52);"></i>
+                             </router-link>
+                        </div>
+                       
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-title">Просрочено</p>
+                                <h4 class="card-text">{{ countByStatus.c3 }}</h4>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div v-show="Object.keys(mobile).length!==0" class="card px-0 py-0 mx-0 my-0">
+                    <div class="card-header mx-0 my-0">Мастера онлайн</div>
+                    <div class="card-body mx-0 my-0 px-0 py-0">
+                        <l-map style="height:470px" ref="map" v-model:zoom="zoom" :center="[43.238482,76.944987]">
+                            <l-tile-layer 
+                                url="https:////{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                layer-type="base"
+                                name="OpenStreetMap"
+                            ></l-tile-layer>
+                            <l-marker  v-for="phone in mobile" :key="phone.id" :lat-lng="phone.location" :title="phone.NAME">
+                                <l-tooltip>{{ phone.NAME }}</l-tooltip>
+                                
+                            </l-marker>
+                            
+                        </l-map>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div v-show="Object.keys(countByStaff).length!==0" class="card px-0 py-0 mx-0 my-0">
+                    <div class="card-header mx-0 my-0">Планы мастеров</div>
+                    <div class="card-body scroll mx-0 my-0">
+                       
+                            <div v-for="staff in countByStaff" :key="staff.id">
+                                <b>{{staff.name}}</b>
+                                <p>{{ (staff.done * 100 / (staff.work + staff.done)).toFixed(2) }}% выполнил, и {{ (staff.done * 100 / countByStatus.c2).toFixed(2) }} % от Обработанных</p>
+                                
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div v-show="Object.keys(countByOrg).length!==0" class="col" v-for="org in countByOrg" :key="org.name">
+                <div class="card px-0 py-0 mx-0 my-0">
+                    <div >
+                        <div class="card-header">{{org.name}}</div>
+                        <div class="card-body">
+                            <i class="fs-5 bi-box-arrow-in-up-left p-1" style="color:#0f9379;" data-bs-toggle="tooltip" title="Новые заявки"></i><span class="fs-5">{{ org.incoming }}</span>
+                            <i class="fs-5 bi-gear p-1" style="color:#f6bf62;" data-bs-toggle="tooltip" title="В работе"></i><span class="fs-5">{{ org.work }}</span>
+                            <i class="fs-5 bi-check2-circle p-1" style="color: rgb(192, 192, 192);" data-bs-toggle="tooltip" title="Выполненные"></i><span class="fs-5">{{ org.done }}</span>
+                            <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ org.rejected }}</span>
+                            <i class="fs-5 bi-box-arrow-in-left p-1" style="color:#da1631;" data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.yesterday }}</span>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <br>
-        <div>
-
-            
-            {{ countByStaff }}
-        </div>
-        <br>
-        <div v-for="staff in countByStaff" :key="staff.id">
-            <div>
-                <h3>{{staff.name}}</h3>
-                <p>{{ (staff.done * 100 / (staff.work + staff.done)).toFixed(2) }}% выполнил, и {{ (staff.done * 100 / countByStatus.c2).toFixed(2) }} % от Обработанных</p>
-                
+        <div id="backdrop" v-show="counter!==0">    
+            <div class="overlay" >
+                <div class="spinner-grow text-primary"  style="width: 3rem; height: 3rem; justify-content: center; align-items: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
-        </div>
-        <br>
-        <div>
-            {{ mobile }}
-        </div>
-        <br>
+        </div>  
+
+
         
 
     </div>
+    
 </template>
 
 <script>
     import "leaflet/dist/leaflet.css"
-    import {  LTooltip,LMap, LGeoJson, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+    import {  LTooltip,LMap,  LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
 
-//{s}.tile.openstreetmap.org
 
-//tilessputnik.ru
-//https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/
     export default {
         name: "Dashboard",
         components: {
                 LMap,
-                LGeoJson,
+                
                 LTileLayer,
                 LMarker,
                 LTooltip
@@ -86,50 +152,46 @@
                 loading: false,
                 zoom:11,
                 yesterday: 0,
+                counter: 0,
                 countByStatus: {},
                 countByOrg: {},
                 countByStaff: {},
                 mobile: {},
                 geojson: null,
+                start: false,
                 geojsonOptions: {
                     // Options that don't rely on Leaflet methods.
                 },
             }
         },
 
-        async beforeMount() {
-            // HERE is where to load Leaflet components!
-            const { circleMarker } = await import("leaflet/dist/leaflet-src.esm");
-
-            // And now the Leaflet circleMarker function can be used by the options:
-            this.geojsonOptions.pointToLayer = (feature, latLng) =>
-            circleMarker(latLng, { radius: 8 });
-            this.mapIsReady = true;
-        },
+     
 
          methods: {
            
-            initMarkers(){
-                this.loading = true
+            async initMarkers(){
+                this.counter ++
                 var user = this.$store.state.auth.user
-                this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
+                await this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
                      (data) => {
-                        console.log(data)
                         this.mobile = data.phones
                         this.mobile.forEach(phone => {
                             let location = ([phone.ltd,phone.lng])
                             phone.location = location
-                            //var layerGroup = L.layerGroup()
-                            //layerGroup.addLayer(marker)
-                            //palce
-                        },
-                        () =>{
-                            console.log("error")
-                        })
-                         
-                        console.log(this.mobile)
-                        this.loading = false
-
+                            
+                            },
+                            (error) =>{
+                                this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                               
+                            }
+                        )
+                        this.counter --
+                        
                      },
                      (error) => {
                         this.message =
@@ -139,38 +201,20 @@
                             error.message ||
                             error.toString();
                         this.successful = false;
-                        this.loading = false;
+                        this.counter --
                         }
 
                  )
             },
-            async handleData(){
-                 this.loading = true
-                 var user = this.$store.state.auth.user
-                 console.log(user)
-                 this.$store.dispatch('dashboard/yesterday', user.session.client.key).then(
-                     (data) => {
-                         console.log(data)
-                         this.yesterday = data.allCount
-                         this.loading = false
-                     },
-                     (error) => {
-                        this.message =
-                            (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.successful = false;
-                        this.loading = false;
-                        }
-                 )
-                 this.$store.dispatch('dashboard/countByStatus', user.session.client.key).then(
+            async getYesterday(){
+                this.counter ++
+                var user = this.$store.state.auth.user
+                
+                await this.$store.dispatch('dashboard/yesterday', user.session.client.key).then(
                     (data) => {
-                         console.log(data)
-                         this.countByStatus = data.count
-                         this.loading = false
-                     },
+                        this.yesterday = data.allCount
+                        this.counter --
+                    },
                      (error) => {
                         this.message =
                             (error.response &&
@@ -179,16 +223,19 @@
                             error.message ||
                             error.toString();
                         this.successful = false;
-                        this.loading = false;
+                        this.counter -- 
                         }
-
-                 )
-
-                 this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
+                )
+            },
+            async getCountByStatus(){
+                //this.loading = true
+                this.counter ++
+                var user = this.$store.state.auth.user
+                await this.$store.dispatch('dashboard/countByStatus', user.session.client.key).then(
                     (data) => {
-                         console.log(data)
-                         this.countByOrg = data.items
-                         this.loading = false
+                        this.countByStatus = data.count
+                        this.counter --
+                        
                      },
                      (error) => {
                         this.message =
@@ -198,16 +245,19 @@
                             error.message ||
                             error.toString();
                         this.successful = false;
-                        this.loading = false;
+                        this.counter --
                         }
 
-                 )
-
-                 this.$store.dispatch('dashboard/countByStaff', user.session.client.key).then(
-                     (data) => {
-                         console.log(data)
-                         this.countByStaff = data.data
-                         this.loading = false
+                )
+            },
+            async getCountByOrg(){
+                this.counter ++
+                var user = this.$store.state.auth.user
+                await this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
+                    (data) => {
+                        this.countByOrg = data.items
+                        this.counter --
+                        
                      },
                      (error) => {
                         this.message =
@@ -217,19 +267,47 @@
                             error.message ||
                             error.toString();
                         this.successful = false;
-                        this.loading = false;
+                        this.counter --
                         }
 
                  )
+            },
 
+            async getCountByStaff(){
+                var user = this.$store.state.auth.user
+                this.counter ++
+                await this.$store.dispatch('dashboard/countByStaff', user.session.client.key).then(
+                    (data) => {
+                        this.countByStaff = data.data
+                        this.counter --
+                        
+                    },
+                     (error) => {
+                        this.message =
+                            (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        this.successful = false;
+                        
+                        this.counter --
+                    }
 
+                 )
+
+                
                  
-             }
+            }
          },
 
         mounted() {
             document.title = "КСУ Доска"
-            this.handleData();
+            
+            this.getYesterday();
+            this.getCountByStatus();
+            this.getCountByOrg();
+            this.getCountByStaff();
             this.initMarkers();
             
          },
@@ -238,5 +316,32 @@
 </script>
 
 <style scoped>
+.scroll {
+    max-height: 470px;
+    overflow-y: auto;
+}
 
+ .overlay {
+    background-color: #EFEFEF;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    opacity: .5;
+    filter: alpha(opacity=50);
+ }
+
+
+#backdrop {
+    background-color: #EFEFEF;
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    /* opacity: .8; */
+    /* filter: alpha(opacity=80); */
+}
 </style>

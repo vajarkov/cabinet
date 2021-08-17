@@ -11,7 +11,6 @@ class AuthService {
             password: sha256.default(user.password)
         })
         .then(response => {
-            console.log(response.data);
             if(response.data.session.client.key) {
                 localStorage.setItem('user', JSON.stringify(response.data))
             }

@@ -1,47 +1,59 @@
 <template>
     <div>
-        <div v-if="Object.keys(orgs).length !== 0">
-            <div v-for="org in orgs" :key="org.id">
-                <h2>{{ org.name }}</h2>
-                <v-date-picker v-model="org.range" is-range>
-                    <template v-slot="{ inputValue, inputEvents }">
-                        <div class="flex justify-center items-center">
-                            <input
-                                :value="inputValue.start"
-                                v-on="inputEvents.start"
-                                class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
-                            />
-                            <svg
-                                fill="none"
-                                class="w-4 h-4 mx-2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                />
-                            </svg>
-                            <input
-                                :value="inputValue.end"
-                                v-on="inputEvents.end"
-                                class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
-                            />
-                        </div>
-                    </template>
-                </v-date-picker>
-                
-                <button style="height:48px; align:center" @click="getPayments(org)">Поучить данные</button>
-            
-                <div>
-                    <apexchart width="80%" :options="org.chartOptions" :series="org.series"></apexchart>
+        <div v-show="Object.keys(orgs).length !== 0" class="row row-cols-1 row-cols-md-1 g-4">
+            <div class="col" v-for="org in orgs" :key="org.id">
+                <div class="card mx-0 py-0 px-0 my-0">
+                    <h5><center style="color:#276595">{{ org.name }}</center></h5>
+                    <div class="card-header d-flex">
+                            <v-date-picker v-model="org.range" is-range>
+                            <template v-slot="{ inputValue, inputEvents }">
+                                <div class="flex justify-center items-center">
+                                    <input
+                                        :value="inputValue.start"
+                                        v-on="inputEvents.start"
+                                        class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
+                                    />
+                                    <svg
+                                        fill="none"
+                                        class="w-4 h-4 mx-2"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                        />
+                                    </svg>
+                                    <input
+                                        :value="inputValue.end"
+                                        v-on="inputEvents.end"
+                                        class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
+                                    />
+                                </div>
+                            </template>
+                        </v-date-picker>
+                    
+                        <button class="mx-5 w-25 h-10 text-light bg-primary" style="align:center" @click="getPayments(org)">Получить данные</button>
+                    </div>
+                    <div class="card-body">
+                        <apexchart width="95%" :options="org.chartOptions" :series="org.series"></apexchart>
+                    </div>
                 </div>
-
             </div>
-
         </div>
+
+
+
+       
+        <div id="backdrop" v-show="loading">    
+            <div class="overlay" >
+                <div class="spinner-grow text-primary"  style="width: 3rem; height: 3rem; justify-content: center; align-items: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div> 
     </div>
 </template>
 <script>
@@ -61,39 +73,45 @@ import { cloneDeep } from 'lodash'
                 message: '',
                 range: {
                     start: new Date(new Date().getFullYear(), new Date().getMonth()-5, new Date().getDate()),
-                    end: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
+                    end: new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()),
                 },
                 chartOptions: {
                     chart: {
                     //stacked: true,
-                    type: "area",
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                fill: {
-                    type: "gradient",
-                },
-                // legend: {
-                //     formatter: (val, opts) => {
-                //     return val + " - " + opts.w.globals.series[opts.seriesIndex];
-                //     },
-                // },
-                title: {
-                    text: "Оплаты",
-                },
-                labels: [],
-                xaxis: {
-                    type: "datetime"
-                },
-                stroke: {
-                    curve: 'smooth'
-                },
+                        type: "area",
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    fill: {
+                        type: "gradient",
+                    },
+                    title: {
+                        text: "Оплаты",
+                    },
+                    labels: [],
+                    xaxis: {
+                        type: "datetime"
+                    },
+                    yaxis: {
+                        min:0,
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    
+                    noData: {
+                        text: 'Выберите дату и нажмите "Получить данные"',
+                        style: {
+                            color: "lightblue",
+                            fontSize: "24px",
+                        }
+                    }
 
-            },
-             series: [{
-                name:"Оплачено",
-                data: []
+                },
+                series: [{
+                    name:"Оплачено",
+                    data: []
                 },
                 {
                 name:"Начислено",
@@ -109,21 +127,21 @@ import { cloneDeep } from 'lodash'
 
         methods: {
             async getOrgs(){
-                //import { clonedeep } from 'lodash'
+                
                 this.loading = true
                 var user = this.$store.state.auth.user
                 this.$store.dispatch('reports/Org', user.session.client.key).then(
                     (org) => {
-                        console.log(org)
+                        
                         this.orgs = org.org
                         this.orgs.forEach(item =>{
-                            console.log(item)
+                            
                             item.range = cloneDeep(this.range) 
                             item.chartOptions = cloneDeep(this.chartOptions)
                             item.series = cloneDeep(this.series)
-                            console.log(item) 
+                            
                         })
-                        console.log(org)
+                        
                         this.loading = false
                     },
                     (error) => {
@@ -143,28 +161,41 @@ import { cloneDeep } from 'lodash'
             },
 
             getPayments(org){
-                this.loading = true
-                console.log(org)
                 var user = this.$store.state.auth.user
                 var start = org.range.start.getFullYear() + '-' + ('0' + (org.range.start.getMonth() + 1)).slice(-2) + '-' + ('0' + org.range.start.getDate()).slice(-2)
-                var end = org.range.end.getFullYear() + '-' + ('0' + (org.range.end.getMonth() + 1)).slice(-2) + '-' + ('0' + org.range.end.getDate()).slice(-2)
-                console.log(start)
-                console.log(end)
+                var end = org.range.end.getFullYear() + '-' + ('0' + (org.range.end.getMonth() + 2)).slice(-2) + '-' + ('0' + org.range.end.getDate()).slice(-2)
+                org.chartOptions = {
+                    noData: {
+                        text: "Идет загрузка данных, подождите...",
+                        style: {
+                            color: "blue",
+                            fontSize: "24px",
+                        }
+                    }
+                }
+                
+                
                 this.$store.dispatch('reports/getPayments',{ id: org.id,  start: start, end: end, key: user.session.client.key}).then(
                     (pays) => {
-                        console.log(pays)
                         while(org.series[0].data.length)
                             org.series[0].data.pop()
                         while(org.series[1].data.length)
                             org.series[1].data.pop()
                         pays.pays.forEach(value => {
-                                console.log(value)
                                 org.series[0].data.push([value.stamp, value.pay])
                                 org.series[1].data.push([value.stamp, value.rent])
                         })
                     },
                     (error) => {
-                        
+                        org.chartOptions = {
+                            noData: {
+                                text: "Ошибка при загрузке...",
+                                style: {
+                                    color: "blue",
+                                    fontSize: "24px",
+                                }
+                            }
+                        }
                         this.message =
                             (error.response &&
                             error.response.data &&
@@ -174,7 +205,7 @@ import { cloneDeep } from 'lodash'
                         this.successful = false;
                         alert(this.message)
                         console.log(this.message)
-                        this.loading = false;
+                        
                     }
                 )
 
@@ -297,5 +328,28 @@ html {
 .mx-2 {
     margin-left:0.5rem;
     margin-right:0.5rem;
+}
+
+ .overlay {
+    background-color: #EFEFEF;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    opacity: .5;
+    filter: alpha(opacity=50);
+ }
+
+#backdrop {
+    background-color: #EFEFEF;
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    /* opacity: .8; */
+    /* filter: alpha(opacity=80); */
 }
 </style>

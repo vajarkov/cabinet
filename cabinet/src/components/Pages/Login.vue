@@ -75,7 +75,6 @@ export default {
 
             this.$store.dispatch("auth/login", user).then(
                 () => {
-                    console.log(user);
                     this.$router.push("/dashboard");
                 },
                 (error) => {

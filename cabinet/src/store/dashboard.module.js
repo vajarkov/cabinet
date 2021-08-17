@@ -10,7 +10,8 @@ export const dashboard = {
         countByStatus:{},
         countByOrg:{},
         countByStaff: {},
-        mobile: {}        
+        mobile: {}, 
+               
     },
 
     actions: {
@@ -18,7 +19,7 @@ export const dashboard = {
             
             return dashboardService.yesterday(key).then(
                 yesterday => {
-                    console.log(yesterday)
+                    //console.log(yesterday)
                     commit('yesterday', yesterday)
                     return Promise.resolve(yesterday)
                 },
@@ -32,7 +33,7 @@ export const dashboard = {
 
             return dashboardService.countByStatus(key).then(
                 counts => {
-                    console.log(counts)
+                    //console.log(counts)
                     commit('countByStatus', counts)
                     return Promise.resolve(counts)
                 },
@@ -46,7 +47,7 @@ export const dashboard = {
 
             return dashboardService.countByOrg(key).then(
                 counts => {
-                    console.log(counts)
+                    //console.log(counts)
                     commit('countByOrg', counts)
                     return Promise.resolve(counts)
                 },
@@ -59,7 +60,7 @@ export const dashboard = {
         countByStaff({commit}, key) {
             return dashboardService.countByStaff(key).then(
                 counts => {
-                    console.log(counts)
+                    //console.log(counts)
                     commit('countByStaff', counts)
                     return Promise.resolve(counts)
                 },
@@ -72,7 +73,7 @@ export const dashboard = {
         Mobile({commit}, key) {
             return dashboardService.Mobile(key).then(
                 mobile => {
-                    console.log(mobile)
+                    //console.log(mobile)
                     commit('Mobile', mobile)
                     return Promise.resolve(mobile)
                 },

@@ -1,21 +1,24 @@
 <template>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light " style="background-color: #e3f2fd;" >
+    <div class="container-fluid ">
     
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        
-        <a href="/" class="navbar-brand" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">КСУ</a>
-        <div class="navbar-nav mr-auto">
+    <a href="#" class="navbar-brand" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+       <img src="@/assets/logo2.png" width="160" height="38" class="rounded"  alt="КСУ Личный кабинет"  /> 
+    </a>
+
+    <ul class="d-flex">
+      <div class="nav navbar-nav mr-auto mt-2">
         <li class="nav-item">
           <router-link to="/dashboard" class="nav-link">
-            <font-awesome-icon icon="home" /> Главная
+            <font-awesome-icon icon="home" />Главная
           </router-link>
         </li>
-        
       </div>
 
-      <div v-if="!currentUser" class="navbar-nav ml-auto">
+      <div v-if="!currentUser" class="navbar-nav mt-2">
         <li class="nav-item">
           <router-link to="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" /> Зарегистрироваться
+            <font-awesome-icon icon="user-plus" />Зарегистрироваться
           </router-link>
         </li>
         <li class="nav-item">
@@ -25,11 +28,11 @@
         </li>
       </div>
 
-      <div v-if="currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
+      <div v-if="currentUser" class="navbar-nav ml-auto mt-2">
+        <li class="nav-item d-flex">
           <router-link to="/dashboard" class="nav-link">
             <font-awesome-icon icon="user" />
-            {{ currentUser.username }}
+            {{ currentUser.session.staff.name }}
           </router-link>
         </li>
         <li class="nav-item">
@@ -38,8 +41,9 @@
           </a>
         </li>
       </div>
-      
-    </nav>
+    </ul>
+    </div>
+  </nav>
     
 </template>
 
@@ -62,3 +66,10 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.navbar-brand { 
+  padding: auto;
+  margin: -;
+}
+</style>

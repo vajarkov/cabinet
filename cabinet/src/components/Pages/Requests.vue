@@ -1,40 +1,46 @@
 <template>
 <div>
-    <v-date-picker v-model="range" is-range>
-        <template v-slot="{ inputValue, inputEvents }">
-            <div class="flex justify-center items-center">
-                <input
-                    :value="inputValue.start"
-                    v-on="inputEvents.start"
-                    class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
-                />
-                <svg
-                    fill="none"
-                    class="w-4 h-4 mx-2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                </svg>
-                <input
-                    :value="inputValue.end"
-                    v-on="inputEvents.end"
-                    class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
-                />
-            </div>
-        </template>
-    </v-date-picker>
+    <div class="card mx-0 py-0 px-0 my-0">
+        <div class="card-header d-flex">
+            <v-date-picker v-model="range" is-range>
+                <template v-slot="{ inputValue, inputEvents }">
+                    <div class="flex justify-center items-center">
+                        <input
+                            :value="inputValue.start"
+                            v-on="inputEvents.start"
+                            class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
+                        />
+                        <svg
+                            fill="none"
+                            class="w-4 h-4 mx-2"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                        </svg>
+                        <input
+                            :value="inputValue.end"
+                            v-on="inputEvents.end"
+                            class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300"
+                        />
+                    </div>
+                </template>
+            </v-date-picker>
     
-    <button style="height:48px; align:center" @click="requestCount">Поучить данные</button>
+            <button class="mx-5 w-25 h-10 text-light bg-primary" style="align:center" @click="requestCount">Получить данные</button>
   
-    <div>
-        <apexchart width="80%" :options="chartOptions" :series="series"></apexchart>
+        </div>
+        <div class="card-body">
+            <apexchart width="95%" :options="chartOptions" :series="series"></apexchart>
+        </div>
     </div>
+    
+    
 </div>
 </template>
 
@@ -50,7 +56,7 @@
             
             return {
                 range: {
-                    start: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
+                    start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                     end: new Date(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()),
                 },
                 datacollection: null,
@@ -70,14 +76,11 @@
                 dataLabels: {
                     enabled: false,
                 },
+                colors: ['#0f9379', '#f6bf62', '#c0c0c0', 'gray' ,'#da1631' ],
                 fill: {
+                    
                     type: "gradient",
                 },
-                // legend: {
-                //     formatter: (val, opts) => {
-                //     return val + " - " + opts.w.globals.series[opts.seriesIndex];
-                //     },
-                // },
                 title: {
                     text: "Обработка заявок",
                 },
@@ -85,11 +88,21 @@
                 xaxis: {
                     type: "datetime"
                 },
+                yaxis: {
+                    min: 0,
+                },
                 stroke: {
                     curve: 'smooth'
                 },
-
-            })
+                noData: {
+                        text: 'Выберите дату и нажмите "Получить данные"',
+                        style: {
+                            color: "lightblue",
+                            fontSize: "24px",
+                        }
+                    }
+                }
+            )
             const series = ref([{
                 name:"Новая",
                 data: []
@@ -125,13 +138,19 @@
                 var user = this.$store.state.auth.user
                 var startDate = this.range.start.getFullYear() + '-' + ('0' + (this.range.start.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.start.getDate()).slice(-2)
                 var endDate = this.range.end.getFullYear() + '-' + ('0' + (this.range.end.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.end.getDate()).slice(-2)
-                console.log(this.range.start)
-                console.log(this.range.end)
+                this.chartOptions = {
+                    noData: {
+                        text: "Идет загрузка данных, подождите...",
+                        style: {
+                            color: "blue",
+                            fontSize: "24px",
+                        }
+                    }
+                }
                 this.$store.dispatch('reports/RequestCount', {end:endDate , start:startDate, key: user.session.client.key}).then(
                     (counts) => {
 
-                        console.log(counts)
-                        //this.counts = counts
+                        
                         while(this.series[0].data.length)
                             this.series[0].data.pop()
                         while(this.series[1].data.length)
@@ -142,9 +161,9 @@
                             this.series[3].data.pop()
                         while(this.series[4].data.length)
                             this.series[4].data.pop()
-                        //console.log(this.counts)
+                        
                         counts.data.forEach(value => {
-                                console.log(value)
+                                
                                 this.series[0].data.push([value.datedoc, value.incoming])
                                 this.series[1].data.push([value.datedoc, value.work])
                                 this.series[2].data.push([value.datedoc, value.done])
@@ -171,7 +190,16 @@
       
                     },
                    (error) => {
-                        alert("Данных за выбранное число нет в базе")
+                        
+                        this.chartOptions = {
+                            noData: {
+                                text: "Ошибка при загрузке...",
+                                style: {
+                                    color: "blue",
+                                    fontSize: "24px",
+                                }
+                            }
+                        }
                         this.message =
                             (error.response &&
                             error.response.data &&
@@ -181,7 +209,7 @@
                         this.successful = false;
                         this.loading = false;
                         console.log(this.message)
-                        }
+                    }
                 )
                 this.loading = false
             },
