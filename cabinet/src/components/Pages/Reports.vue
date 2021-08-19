@@ -7,7 +7,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/staff" class="nav-link text-truncate">
-                                <i class="fs-6 bi-journal-bookmark-fill"></i><span class="ms-2 d-none d-sm-inline">Сотрудники</span>
+                                <i class="fs-5 bi-people-fill" data-bs-toggle="tooltip" title="Сотрудники"></i><span class="ms-2 d-sm-inline">Сотрудники</span>
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -26,7 +26,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/requests" class="nav-link text-truncate">
-                                <i class="fs-6 bi-journal-bookmark-fill"></i><span class="ms-2 d-none d-sm-inline">Заявки</span>
+                                <i class="fs-5 bi-card-checklist" data-bs-toggle="tooltip" title="Заявки"></i><span class="ms-2 d-sm-inline">Заявки</span>
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -44,7 +44,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/payments" class="nav-link text-truncate">
-                                <i class="fs-6 bi-journal-bookmark-fill"></i><span class="ms-2 d-none d-sm-inline">Оплаты</span> 
+                                <i class="fs-5 bi-cash-coin" data-bs-toggle="tooltip" title="Платежи"></i><span class="ms-2 d-sm-inline">Оплаты</span> 
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -63,7 +63,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/pastdue" class="nav-link text-truncate">
-                                <i class="fs-6 bi-journal-bookmark-fill"></i><span class="ms-2 d-none d-sm-inline">Просроченные заявки</span> 
+                                <i class="fs-5 bi-clock" data-bs-toggle="tooltip" title="Просроченные заявки"></i><span class="ms-2 d-sm-inline">Просроченные заявки</span> 
                             </router-link>
                         </div>
                         <div class="card-body">

@@ -68,7 +68,7 @@
                 <div v-show="Object.keys(mobile).length!==0" class="card px-0 py-0 mx-0 my-0">
                     <div class="card-header mx-0 my-0">Мастера онлайн</div>
                     <div class="card-body mx-0 my-0 px-0 py-0">
-                        <l-map style="height:470px" ref="map" v-model:zoom="zoom" :center="[43.238482,76.944987]">
+                        <l-map style="height:470px" ref="map" v-model:zoom="zoom" :center="center">
                             <l-tile-layer 
                                 url="https:////{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 layer-type="base"
@@ -83,8 +83,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">0 
-                <div v-show="Object.keys(countByStaff).length!==0" class="card px-py-0 mx-0 my-0">
+            <div class="col-sm-4">
+                <div v-show="Object.keys(countByStaff).length!==0" class="card px-0 py-0 mx-0 my-0">
                     <div class="card-header mx-0 my-0">Планы мастеров</div>
                     <div class="card-body scroll mx-0 my-0">
                         <div v-for="staff in countByStaff" :key="staff.id">
@@ -153,9 +153,7 @@
                 mobile: {},
                 geojson: null,
                 start: false,
-                geojsonOptions: {
-                    // Options that don't rely on Leaflet methods.
-                },
+                center: [],
             }
         },
 
@@ -293,11 +291,50 @@
                 
                  
             }
-         },
+        },
+        
 
+        beforeMount() {
+            
+            switch(this.$store.state.auth.user.session.branch.id){
+                case 4:
+                case 5:{
+                    this.center = [43.238482, 76.944987]
+                    break;
+                }
+                case 13:
+                case 14: {
+                    this.center = [51.13333, 71.4333]
+                    break;
+                }
+                case 37:
+                case 38:
+                case 40:{
+                    this.center = [52.3156, 76.9564]
+                    break
+                }
+                case 41:
+                case 43:
+                case 44: {
+                    this.center = [51.7298, 75.3266]
+                    break
+                }
+                case 45:
+                case 46: {
+                    this.center = [42.3000, 69.6000]
+                    break
+                }
+                default:
+                    {
+                        break;
+                    }
+            }
+            
+        },
         mounted() {
             document.title = "КСУ Доска"
             
+            //if (this.$store.state.auth.user)
             this.getYesterday();
             this.getCountByStatus();
             this.getCountByOrg();
