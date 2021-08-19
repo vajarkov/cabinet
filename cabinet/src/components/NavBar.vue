@@ -68,8 +68,4 @@ export default {
 </script>
 
 <style scoped>
-.navbar-brand { 
-  padding: auto;
-  margin: -;
-}
 </style>

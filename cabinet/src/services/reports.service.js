@@ -57,6 +57,13 @@ class ReportsService {
         })
     }
 
+    getRequests(org, status, key) {
+        return axios.get(API_URL + "reports/request/orgstatus/" + org + "/" + status +  "?key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
     
 }
 

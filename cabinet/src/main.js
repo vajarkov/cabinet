@@ -14,6 +14,7 @@ import Moveable from '@gabojkz/vue_moveable_v3';
 
 
 createApp(App)
+
     .use(router)
     .use(store)
     .use(Moveable)

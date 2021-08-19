@@ -30,7 +30,7 @@ export default {
 
 <style>
   body {
-    padding-top: 90px;
+    padding-top: 120px;
   }
 
 

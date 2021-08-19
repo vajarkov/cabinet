@@ -9,11 +9,11 @@ import Staff from "@/components/Pages/Staff";
 import Requests from "@/components/Pages/Requests";
 import Payments from "@/components/Pages/Payments";
 import PastDue from "@/components/Pages/PastDue";
+import RequestsStatus from "@/components/Pages/RequestsStatus";
 
 const routes = [
   {
     path: "/",
-    name: "dashboard",
     component: Dashboard,
   },
  
@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: "/home",
-    name: "home",
+    name: "dashboard",
     component: Dashboard,
   },
   {
@@ -65,6 +65,11 @@ const routes = [
     name: "pastdue",
     component: PastDue,
   },
+  {
+    path: "/requests/:org_id/:status_id/:name/:status",
+    name: "requestsStatus",
+    component: RequestsStatus,
+  }
 ];
 
 const router = createRouter({

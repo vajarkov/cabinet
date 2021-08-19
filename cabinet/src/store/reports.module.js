@@ -13,7 +13,8 @@ export const reports = {
         payments: {},
         org: {}, 
         pays: {}, 
-        pastdue: {},     
+        pastdue: {},
+        requests: {},     
     },
 
     actions: {
@@ -100,7 +101,18 @@ export const reports = {
                     return Promise.reject(error)
                 }
             )
-        }
+        },
+        getRequests({commit}, json) {
+            return reportsService.getRequests(json.org_id, json.status_id, json.key).then(
+                requests => {
+                    commit('getRequests', requests)
+                    return Promise.resolve(requests)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
     },
 
     mutations:{
@@ -126,7 +138,10 @@ export const reports = {
         },
         pastDue(state, pastdue) {
             state.pastdue = pastdue
-        }
+        },
+        getRequests(state, requests) {
+            state.requests = requests
+        },
         
     
     }

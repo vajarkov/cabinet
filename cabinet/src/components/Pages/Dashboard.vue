@@ -1,11 +1,9 @@
 <template>
     <div>
-        
         <i class="fs-1 bi-laptop"></i><span class="fs-3 ms-1 d-none d-lg-inline">Доска</span>
-         
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
-                <div v-show="yesterday" class="card mb-3 mx-0 py-0">
+                <div class="card mb-3 mx-0 py-0">
                     <div class="row g-0">
                         <div class="col-md-2">
                             <i class="fs-1 bi-box-arrow-in-left"></i>
@@ -51,21 +49,19 @@
             </div>
             <div class="col">
                 <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
-                    <div class="row g-0">
-                        <div class="col-md-2">
-                            <router-link to="/reports/pastdue">
+                    <router-link class="text-decoration-none text-dark" to="/reports/pastdue">
+                        <div class="row g-0">
+                            <div class="col-md-2">
                                 <i class="fs-1 bi-clock" style="color: rgb(193, 52, 52);"></i>
-                             </router-link>
-                        </div>
-                       
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <p class="card-title">Просрочено</p>
-                                <h4 class="card-text">{{ countByStatus.c3 }}</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <p class="card-title">Просрочено</p>
+                                    <h4 class="card-text">{{ countByStatus.c3 }}</h4>
+                                </div>
                             </div>
                         </div>
-                       
-                    </div>
+                    </router-link>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -87,17 +83,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div v-show="Object.keys(countByStaff).length!==0" class="card px-0 py-0 mx-0 my-0">
+            <div class="col-sm-4">0 
+                <div v-show="Object.keys(countByStaff).length!==0" class="card px-py-0 mx-0 my-0">
                     <div class="card-header mx-0 my-0">Планы мастеров</div>
                     <div class="card-body scroll mx-0 my-0">
-                       
-                            <div v-for="staff in countByStaff" :key="staff.id">
-                                <b>{{staff.name}}</b>
-                                <p>{{ (staff.done * 100 / (staff.work + staff.done)).toFixed(2) }}% выполнил, и {{ (staff.done * 100 / countByStatus.c2).toFixed(2) }} % от Обработанных</p>
-                                
-                            </div>
-                        
+                        <div v-for="staff in countByStaff" :key="staff.id">
+                            <b>{{staff.name}}</b>
+                            <p>{{ (staff.done * 100 / (staff.work + staff.done)).toFixed(2) }}% выполнил, и {{ (staff.done * 100 / countByStatus.c2).toFixed(2) }} % от Обработанных</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,30 +99,31 @@
                     <div >
                         <div class="card-header">{{org.name}}</div>
                         <div class="card-body">
-                            <i class="fs-5 bi-box-arrow-in-up-left p-1" style="color:#0f9379;" data-bs-toggle="tooltip" title="Новые заявки"></i><span class="fs-5">{{ org.incoming }}</span>
-                            <i class="fs-5 bi-gear p-1" style="color:#f6bf62;" data-bs-toggle="tooltip" title="В работе"></i><span class="fs-5">{{ org.work }}</span>
-                            <i class="fs-5 bi-check2-circle p-1" style="color: rgb(192, 192, 192);" data-bs-toggle="tooltip" title="Выполненные"></i><span class="fs-5">{{ org.done }}</span>
-                            <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ org.rejected }}</span>
-                            <i class="fs-5 bi-box-arrow-in-left p-1" style="color:#da1631;" data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.yesterday }}</span>
-                            
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 1, name: org.name, status: 'Новые заявки' }}">
+                                <i class="fs-5 bi-box-arrow-in-up-left p-1" style="color:#0f9379;" data-bs-toggle="tooltip" title="Новые заявки"></i><span class="fs-5">{{ org.incoming }}</span>
+                            </router-link>
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 2, name: org.name, status: 'В работе' }}">
+                                <i class="fs-5 bi-gear p-1" style="color:#f6bf62;" data-bs-toggle="tooltip" title="В работе"></i><span class="fs-5">{{ org.work }}</span>
+                            </router-link>
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 3, name: org.name, status: 'Выполненные заявки'}}">
+                                <i class="fs-5 bi-check2-circle p-1" style="color: rgb(192, 192, 192);" data-bs-toggle="tooltip" title="Выполненные"></i><span class="fs-5">{{ org.done }}</span>
+                            </router-link>
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 5, name: org.name, status: 'Отложенные заявки' }}">
+                                <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ org.rejected }}</span>
+                            </router-link>
+                            <i class='fs-5 bi-box-arrow-in-left p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.yesterday }}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="backdrop" v-show="counter!==0">    
-            <div class="overlay" >
-                <div class="spinner-grow text-primary"  style="width: 3rem; height: 3rem; justify-content: center; align-items: center;" role="status">
-                    <span class="sr-only">Loading...</span>
+        <div id='backdrop' v-show="counter!==0">    
+            <div class='overlay' >
+                <div class="spinner-grow text-primary"  style='width:3rem;height:3rem;justify-content:center;align-items:center;' role="status">
                 </div>
             </div>
         </div>  
-
-
-        
-
     </div>
-    
 </template>
 
 <script>
