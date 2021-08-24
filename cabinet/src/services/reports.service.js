@@ -13,6 +13,15 @@ class ReportsService {
         })
     }
 
+    MobileBranch(key, branch) {
+        
+        return axios.get(API_URL + "mobile/branch?key=" + key + '&branch=' + branch )
+        .then(response => {
+            return response.data
+        })
+    }
+
+
 
     ReportView(key, date, id){
         return axios.get(API_URL +"mobile/report/" + date + "/" + id + "?key=" + key)
@@ -23,6 +32,27 @@ class ReportsService {
 
     RequestCount(end, start, key) {
         return axios.get(API_URL + "request/counts?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    RequestCountBranch(end, start, key, branch) {
+        return axios.get(API_URL + "request/countsbranch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    Repeat(end, start, key) {
+        return axios.get(API_URL + "request/repeats?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    RepeatBranch(end, start, key, branch) {
+        return axios.get(API_URL + "request/repeatsbranch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
         .then(response => {
             return response.data
         }) 
@@ -43,6 +73,13 @@ class ReportsService {
         })
     }
 
+    OrgBranch(key) {
+        return axios.get(API_URL + "org/branch?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
     getPayments(id, start, end, key) {
         return axios.get(API_URL + "reports/kontragent/org/" + id + "/" + start + "/" + end + "?key=" + key)
         .then(response => {
@@ -57,6 +94,13 @@ class ReportsService {
         })
     }
 
+    pastDueBranch(key) {
+        return axios.get(API_URL + "reports/request/pastduebranch?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
     getRequests(org, status, key) {
         return axios.get(API_URL + "reports/request/orgstatus/" + org + "/" + status +  "?key=" + key)
         .then(response => {
@@ -64,7 +108,40 @@ class ReportsService {
         }) 
     }
 
-    
+    Branch(key){
+        return axios.get(API_URL + "branch?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
+    Branches(key, branch){
+        return axios.get(API_URL + "branch/cities?branch="+ branch +"&key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
+    Types(end, start, key) {
+        return axios.get(API_URL + "request/types?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    TypesBranch(end, start, key, branch) {
+        return axios.get(API_URL + "request/typesbranch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    TypesBranches(end, start, key, branch) {
+        return axios.get(API_URL + "request/typesbranches?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
 }
 
 export default new ReportsService()

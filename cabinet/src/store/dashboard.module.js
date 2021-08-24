@@ -19,7 +19,7 @@ export const dashboard = {
             
             return dashboardService.yesterday(key).then(
                 yesterday => {
-                    //console.log(yesterday)
+                    
                     commit('yesterday', yesterday)
                     return Promise.resolve(yesterday)
                 },
@@ -29,11 +29,42 @@ export const dashboard = {
             )
         },
 
+
+        yesterdayByBranch({commit}, key) {
+            
+            return dashboardService.yesterdayByBranch(key).then(
+                yesterday => {
+                    
+                    commit('yesterday', yesterday)
+                    return Promise.resolve(yesterday)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+        
+
         countByStatus({commit}, key) {
 
             return dashboardService.countByStatus(key).then(
                 counts => {
-                    //console.log(counts)
+                    
+                    commit('countByStatus', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+
+        countByStatusBranch({commit}, key) {
+
+            return dashboardService.countByStatusBranch(key).then(
+                counts => {
+                    
                     commit('countByStatus', counts)
                     return Promise.resolve(counts)
                 },
@@ -47,7 +78,21 @@ export const dashboard = {
 
             return dashboardService.countByOrg(key).then(
                 counts => {
-                    //console.log(counts)
+                   
+                    commit('countByOrg', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        countByOrgBranch({commit}, key) {
+
+            return dashboardService.countByOrgBranch(key).then(
+                counts => {
+                    
                     commit('countByOrg', counts)
                     return Promise.resolve(counts)
                 },
@@ -60,7 +105,22 @@ export const dashboard = {
         countByStaff({commit}, key) {
             return dashboardService.countByStaff(key).then(
                 counts => {
-                    //console.log(counts)
+                    
+                    commit('countByStaff', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        countByStaffBranch({commit}, json) {
+            var branch = json['branch']
+            var key = json['key']
+            return dashboardService.countByStaffBranch(key, branch).then(
+                counts => {
+                    
                     commit('countByStaff', counts)
                     return Promise.resolve(counts)
                 },
@@ -73,7 +133,22 @@ export const dashboard = {
         Mobile({commit}, key) {
             return dashboardService.Mobile(key).then(
                 mobile => {
-                    //console.log(mobile)
+                    
+                    commit('Mobile', mobile)
+                    return Promise.resolve(mobile)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        MobileBranch({commit}, json) {
+            var key = json['key']
+            var branch = json['branch']
+            return dashboardService.MobileBranch(key, branch).then(
+                mobile => {
+                    
                     commit('Mobile', mobile)
                     return Promise.resolve(mobile)
                 },
@@ -95,7 +170,7 @@ export const dashboard = {
         },
 
         countByOrg(state, counts) {
-            state.countByOrg = counts.count
+            state.countByOrg = counts.items
         },
 
         countByStaff(state, counts) {

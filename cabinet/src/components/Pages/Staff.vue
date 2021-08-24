@@ -31,7 +31,7 @@
         <div class="card-body mx-0 my-0 px-0 py-0">
             <div class="row row-cols-1 row-cols-md-4 g-4">
                 <div class="col-sm-8 mx-0 pe-0">
-                    <l-map id="map" style="height:50vh" ref="map" v-model:zoom="zoom" :center="[43.238482,76.944987]">
+                    <l-map id="map" style="height:50vh" ref="map" v-model:zoom="zoom" :center="center">
                         <l-tile-layer 
                             url="https:////{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             layer-type="base"
@@ -97,7 +97,8 @@
                 data:{},
                 distance:[],
                 timePeriod:0,
-                geojson: null,
+                center:[],
+                full_access:0,
                
             }
         }, 
@@ -112,25 +113,62 @@
         },
         methods: {
 
-             initMarkers(){
+            async initMarkers(){
                 this.loading = true
                 var user = this.$store.state.auth.user
-                this.$store.dispatch('reports/Mobile', user.session.client.key).then(
+                if(this.full_access === 1){
+                    await this.$store.dispatch('reports/Mobile', user.session.client.key).then(
+                        (data) => {
+                            
+                            this.mobile = data.phones
+                            this.mobile.forEach(phone => {
+                                let location = ([phone.ltd,phone.lng])
+                                phone.location = location
+                            
+                            },
+                            () =>{
+
+                                console.log("error")
+                            })
+                            
+                            this.loading = false
+
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.loading = false;
+                            console.log(this.message)
+                            }
+
+                    )
+                } else {
+                    let branch = this.$store.state.auth.user.session.branch.id
+                    await this.$store.dispatch('reports/MobileBranch', {key:user.session.client.key, branch: branch}).then(
                      (data) => {
-                        //console.log(data)
                         this.mobile = data.phones
                         this.mobile.forEach(phone => {
                             let location = ([phone.ltd,phone.lng])
                             phone.location = location
+                            
+                            },
+                            (error) =>{
+                                this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                               
+                            }
+                        )
+                        this.counter --
                         
-                        },
-                        () =>{
-
-                            console.log("error")
-                        })
-                         
-                        this.loading = false
-
                      },
                      (error) => {
                         this.message =
@@ -140,11 +178,11 @@
                             error.message ||
                             error.toString();
                         this.successful = false;
-                        this.loading = false;
-                        console.log(this.message)
+                        this.counter --
                         }
 
-                 )
+                    )
+                }
             },
 
 
@@ -171,10 +209,9 @@
                 this.clearData();
                 this.$store.dispatch('reports/ReportView', {key:user.session.client.key, date:date, id:id}).then(
                     (data) => 
-                    {   //console.log(data)
+                    {   
                         this.data = data
                         this.data.detail.forEach(item => {
-                        console.log(item)
                         this.distance.push([parseFloat(item.coord.ltd), parseFloat(item.coord.lng)]);
                         if(item.action === "MOVE")
                             this.timePeriod += item.period;
@@ -199,7 +236,44 @@
             },
         },    
                 
-                    
+         beforeMount() {
+            
+            switch(this.$store.state.auth.user.session.branch.id){
+                case 4:
+                case 5:{
+                    this.center = [43.238482, 76.944987]
+                    break;
+                }
+                case 13:
+                case 14: {
+                    this.center = [51.13333, 71.4333]
+                    break;
+                }
+                case 37:
+                case 38:
+                case 40:{
+                    this.center = [52.3156, 76.9564]
+                    break
+                }
+                case 41:
+                case 43:
+                case 44: {
+                    this.center = [51.7298, 75.3266]
+                    break
+                }
+                case 45:
+                case 46: {
+                    this.center = [42.3000, 69.6000]
+                    break
+                }
+                default:
+                    {
+                        break;
+                    }
+            }
+            this.full_access = this.$store.state.auth.user.session.staff.full_access 
+            
+        },    
                 
             
         

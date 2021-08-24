@@ -89,12 +89,13 @@
                     <div class="card-body scroll mx-0 my-0">
                         <div v-for="staff in countByStaff" :key="staff.id">
                             <b>{{staff.name}}</b>
-                            <p>{{ (staff.done * 100 / (staff.work + staff.done)).toFixed(2) }}% выполнил, и {{ (staff.done * 100 / countByStatus.c2).toFixed(2) }} % от Обработанных</p>
+                            <p class="my-0">Выполнил {{ staff.done }} из {{ (parseInt(staff.work) + parseInt(staff.done)) }}</p>
+                            <p >Время последней заявки: {{staff.stamp}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-show="Object.keys(countByOrg).length!==0" class="col" v-for="org in countByOrg" :key="org.name">
+            <div v-show="Object.keys(countByOrg).length!==0" class="col-sm-4" v-for="org in countByOrg" :key="org.name">
                 <div class="card px-0 py-0 mx-0 my-0">
                     <div >
                         <div class="card-header">{{org.name}}</div>
@@ -112,6 +113,7 @@
                                 <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ org.rejected }}</span>
                             </router-link>
                             <i class='fs-5 bi-box-arrow-in-left p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.yesterday }}</span>
+                            <i class='fs-5 bi-clock p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.pastdue }}</span>
                         </div>
                     </div>
                 </div>
@@ -154,6 +156,8 @@
                 geojson: null,
                 start: false,
                 center: [],
+                full_access: 0,
+                
             }
         },
 
@@ -164,7 +168,43 @@
             async initMarkers(){
                 this.counter ++
                 var user = this.$store.state.auth.user
-                await this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
+                if(this.full_access === 1){
+                    await this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
+                        (data) => {
+                            this.mobile = data.phones
+                            this.mobile.forEach(phone => {
+                                let location = ([phone.ltd,phone.lng])
+                                phone.location = location
+                                
+                                },
+                                (error) =>{
+                                    this.message =
+                                    (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                                
+                                }
+                            )
+                            this.counter --
+                            
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.counter --
+                            }
+
+                    )
+                } else {
+                    let branch = this.$store.state.auth.user.session.branch.id
+                    await this.$store.dispatch('dashboard/MobileBranch', {key:user.session.client.key, branch: branch}).then(
                      (data) => {
                         this.mobile = data.phones
                         this.mobile.forEach(phone => {
@@ -196,13 +236,33 @@
                         this.counter --
                         }
 
-                 )
+                    )
+                }
             },
             async getYesterday(){
                 this.counter ++
                 var user = this.$store.state.auth.user
-                
-                await this.$store.dispatch('dashboard/yesterday', user.session.client.key).then(
+                if(this.full_access === 1){
+                    await this.$store.dispatch('dashboard/yesterday', user.session.client.key).then(
+                        (data) => {
+                            this.yesterday = data.allCount
+                            this.counter --
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.counter -- 
+                        }
+                    )
+
+                }
+                else{
+                    await this.$store.dispatch('dashboard/yesterdayByBranch', user.session.client.key).then(
                     (data) => {
                         this.yesterday = data.allCount
                         this.counter --
@@ -218,57 +278,129 @@
                         this.counter -- 
                         }
                 )
+
+                }
             },
+            
+
+            
             async getCountByStatus(){
                 //this.loading = true
                 this.counter ++
                 var user = this.$store.state.auth.user
-                await this.$store.dispatch('dashboard/countByStatus', user.session.client.key).then(
-                    (data) => {
-                        this.countByStatus = data.count
-                        this.counter --
-                        
-                     },
-                     (error) => {
-                        this.message =
-                            (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.successful = false;
-                        this.counter --
-                        }
+                if(this.full_access === 1){
+                    await this.$store.dispatch('dashboard/countByStatus', user.session.client.key).then(
+                        (data) => {
+                            this.countByStatus = data.count
+                            this.counter --
+                            
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.counter --
+                            }
 
-                )
+                    )
+                } else {
+                   await this.$store.dispatch('dashboard/countByStatusBranch', user.session.client.key).then(
+                        (data) => {
+                            
+                            this.countByStatus = data.count
+                            this.counter --
+                            
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.counter --
+                            }
+
+                    )
+                }
+                
             },
             async getCountByOrg(){
                 this.counter ++
                 var user = this.$store.state.auth.user
-                await this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
-                    (data) => {
-                        this.countByOrg = data.items
-                        this.counter --
-                        
-                     },
-                     (error) => {
-                        this.message =
-                            (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.successful = false;
-                        this.counter --
-                        }
+                if(this.full_access === 1){
+                    await this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
+                        (data) => {
+                            this.countByOrg = data.items
+                            this.counter --
+                            
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.counter --
+                            }
 
-                 )
+                    )
+                }else{
+                        await this.$store.dispatch('dashboard/countByOrgBranch', user.session.client.key).then(
+                        (data) => {
+                            this.countByOrg = data.items
+                            this.counter --
+                            
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.counter --
+                            }
+
+                    )
+                }
+
             },
 
             async getCountByStaff(){
                 var user = this.$store.state.auth.user
                 this.counter ++
-                await this.$store.dispatch('dashboard/countByStaff', user.session.client.key).then(
+                 if(this.full_access === 1){
+                    await this.$store.dispatch('dashboard/countByStaff', user.session.client.key).then(
+                        (data) => {
+                            this.countByStaff = data.data
+                            this.counter --
+                            
+                        },
+                        (error) => {
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            
+                            this.counter --
+                        }
+
+                    )
+                 }else {
+                    let branch = this.$store.state.auth.user.session.branch.id
+                    await this.$store.dispatch('dashboard/countByStaffBranch', {key: user.session.client.key, branch: branch  }).then(
                     (data) => {
                         this.countByStaff = data.data
                         this.counter --
@@ -287,6 +419,8 @@
                     }
 
                  )
+
+                 }
 
                 
                  
@@ -329,17 +463,19 @@
                         break;
                     }
             }
+            this.full_access = this.$store.state.auth.user.session.staff.full_access 
             
         },
         mounted() {
             document.title = "КСУ Доска"
+            setTimeout(function() { window.dispatchEvent(new Event('resize')) }, 250);
             
-            //if (this.$store.state.auth.user)
-            this.getYesterday();
-            this.getCountByStatus();
-            this.getCountByOrg();
-            this.getCountByStaff();
-            this.initMarkers();
+            
+                this.getYesterday();
+                this.getCountByStatus();
+                this.getCountByOrg();
+                this.getCountByStaff();
+                this.initMarkers();
             
          },
          

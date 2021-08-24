@@ -10,6 +10,7 @@
                             <th scope="col">Дата</th>
                             <th scope="col">Адрес</th>
                             <th scope="col">Коментарий</th>
+                            <th scope="col" class="d-none d-lg-table-cell">Мастер</th>
                                 
                         </thead>
                         <tbody v-for="request in requests" :key="request.id">
@@ -18,7 +19,7 @@
                                 <td>{{ request.datedoc }}</td>
                                 <td>{{ request.address }}</td>
                                 <td>{{ request.cmnt }}</td>
-                            
+                                <td class="d-none d-lg-table-cell">{{ request.name }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -48,6 +49,7 @@
                 requests: [],
                 name: "",
                 status: "",
+                loading: false,
             }
         },
         methods:{

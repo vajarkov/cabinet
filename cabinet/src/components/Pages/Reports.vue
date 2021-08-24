@@ -78,6 +78,44 @@
                     </div>
                 </div>
 
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/repeat" class="nav-link text-truncate">
+                                <i class="fs-5 bi-arrow-repeat" data-bs-toggle="tooltip" title="Повторяющиеся заявки"></i><span class="ms-2 d-sm-inline">Повторяющиеся заявки</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <ul>
+                                <li><small>список абонентов, которые за выбранный период обращались несколько раз</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/types" class="nav-link text-truncate">
+                                <i class="fs-5 bi-card-list" data-bs-toggle="tooltip" title="Категории заявок"></i><span class="ms-2 d-sm-inline">Категории заявок</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <ul>
+                                <li><small>количество выполненных заявок по категориям в разных подразделениях</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         

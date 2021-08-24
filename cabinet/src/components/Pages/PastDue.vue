@@ -7,6 +7,7 @@
                         <th scope="col">Дата</th>
                         <th scope="col">Адрес</th>
                         <th scope="col">Коментарий</th>
+                        <th scope="col" class="d-none d-lg-table-cell">Мастер</th>
                     </thead>
                     <tbody v-for="request in pastdue" :key="request.id">
                         <tr>
@@ -14,6 +15,7 @@
                             <td>{{ request.datedoc }}</td>
                             <td>{{ request.address }}</td>
                             <td>{{ request.cmnt }}</td>
+                            <td class="d-none d-lg-table-cell">{{ request.name }}</td>
                         </tr>
                     </tbody>
             </table>
@@ -58,26 +60,49 @@
             getPastDue(){
                 this.loading = true
                 var user = this.$store.state.auth.user
-                this.$store.dispatch('reports/pastDue', user.session.client.key).then(
-                    (pastdue) => {
-                        
-                        this.pastdue = pastdue.pastdue
-                        this.loading = false
-                        
-                    },
-                    (error) => {
-                        
-                        this.message =
-                            (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.successful = false;
-                        this.loading = false;
-                        console.log(this.message)
-                        }
-                )
+                if(this.$store.state.auth.user.session.staff.full_access === 1){
+                    this.$store.dispatch('reports/pastDue', user.session.client.key).then(
+                        (pastdue) => {
+                            
+                            this.pastdue = pastdue.pastdue
+                            this.loading = false
+                            
+                        },
+                        (error) => {
+                            
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.loading = false;
+                            console.log(this.message)
+                            }
+                    )
+                } else {
+                    this.$store.dispatch('reports/pastDueBranch', user.session.client.key).then(
+                        (pastdue) => {
+                            
+                            this.pastdue = pastdue.pastdue
+                            this.loading = false
+                            
+                        },
+                        (error) => {
+                            
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.loading = false;
+                            console.log(this.message)
+                            }
+                    )
+                }
             },
 
             

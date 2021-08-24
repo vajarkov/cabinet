@@ -147,7 +147,61 @@
                         }
                     }
                 }
-                this.$store.dispatch('reports/RequestCount', {end:endDate , start:startDate, key: user.session.client.key}).then(
+                if(this.$store.state.auth.user.session.staff.full_access === 1){
+                    this.$store.dispatch('reports/RequestCount', {end:endDate , start:startDate, key: user.session.client.key}).then(
+                        (counts) => {
+
+                            
+                            while(this.series[0].data.length)
+                                this.series[0].data.pop()
+                            while(this.series[1].data.length)
+                                this.series[1].data.pop()
+                            while(this.series[2].data.length)
+                                this.series[2].data.pop()
+                            while(this.series[3].data.length)
+                                this.series[3].data.pop()
+                            while(this.series[4].data.length)
+                                this.series[4].data.pop()
+                            
+                            counts.data.forEach(value => {
+                                    
+                                    this.series[0].data.push([value.datedoc, value.incoming])
+                                    this.series[1].data.push([value.datedoc, value.work])
+                                    this.series[2].data.push([value.datedoc, value.done])
+                                    this.series[3].data.push([value.datedoc, value.trable])
+                                    this.series[4].data.push([value.datedoc, value.rejected])
+    
+
+                            });
+                        
+        
+                        },
+                    (error) => {
+                            
+                            this.chartOptions = {
+                                noData: {
+                                    text: "Ошибка при загрузке...",
+                                    style: {
+                                        color: "blue",
+                                        fontSize: "24px",
+                                    }
+                                }
+                            }
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            this.loading = false;
+                            console.log(this.message)
+                        }
+                    )
+                    this.loading = false
+                } else {
+                    let branch = this.$store.state.auth.user.session.branch.id
+                    this.$store.dispatch('reports/RequestCountBranch', {end:endDate , start:startDate, key: user.session.client.key, branch: branch }).then(
                     (counts) => {
 
                         
@@ -169,21 +223,7 @@
                                 this.series[2].data.push([value.datedoc, value.done])
                                 this.series[3].data.push([value.datedoc, value.trable])
                                 this.series[4].data.push([value.datedoc, value.rejected])
-                                /* if (value.name === "Новый"){
-                                    this.series[0].data.push([value.datedoc, value.count])
-                                }
-                                if (value.name === "В работе"){
-                                    this.series[1].data.push([value.datedoc, value.count])
-                                }
-                                if (value.name === "Выполнен"){
-                                    this.series[2].data.push([value.datedoc, value.count])
-                                }
-                                if (value.name === "В ожидании"){
-                                    this.series[3].data.push([value.datedoc, value.count])
-                                }
-                                if (value.name === "Отложен"){
-                                    this.series[4].data.push([value.datedoc, value.count])
-                                } */
+   
 
                         });
                        
@@ -212,13 +252,14 @@
                     }
                 )
                 this.loading = false
+                }
             },
             
         },
 
-    mounted () {
-        document.title = "КСУ Отчет по заявкам"
-    },
+        mounted () {
+            document.title = "КСУ Отчет по заявкам"
+        },
 
         
 

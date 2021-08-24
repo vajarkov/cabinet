@@ -10,6 +10,8 @@ import Requests from "@/components/Pages/Requests";
 import Payments from "@/components/Pages/Payments";
 import PastDue from "@/components/Pages/PastDue";
 import RequestsStatus from "@/components/Pages/RequestsStatus";
+import Repeat from "@/components/Pages/Repeat";
+import RequestTypes from "@/components/Pages/RequestTypes";
 
 const routes = [
   {
@@ -69,7 +71,18 @@ const routes = [
     path: "/requests/:org_id/:status_id/:name/:status",
     name: "requestsStatus",
     component: RequestsStatus,
-  }
+  },
+  {
+    path: "/reports/repeat",
+    name: "Repeat",
+    component: Repeat,
+  },
+  {
+    path: "/reports/types",
+    name: "RepeatTypes",
+    component: RequestTypes,
+  },
+
 ];
 
 const router = createRouter({

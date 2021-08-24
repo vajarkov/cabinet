@@ -14,7 +14,10 @@ export const reports = {
         org: {}, 
         pays: {}, 
         pastdue: {},
-        requests: {},     
+        requests: {},
+        repeat: {},
+        branches: {},
+        types: {},     
     },
 
     actions: {
@@ -22,6 +25,21 @@ export const reports = {
         Mobile({commit}, key) {
             return reportsService.Mobile(key).then(
                 mobile => {
+                    commit('Mobile', mobile)
+                    return Promise.resolve(mobile)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        MobileBranch({commit}, json) {
+            var key = json['key']
+            var branch = json['branch']
+            return reportsService.MobileBranch(key, branch).then(
+                mobile => {
+                    
                     commit('Mobile', mobile)
                     return Promise.resolve(mobile)
                 },
@@ -55,6 +73,42 @@ export const reports = {
             ) 
         },
 
+        RequestCountBranch({commit}, json){
+            return reportsService.RequestCountBranch(json.end, json.start, json.key, json.branch).then(
+                counts => {
+                    commit('RequestCount', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        Repeat({commit}, json){
+            return reportsService.Repeat(json.end, json.start, json.key).then(
+                repeat => {
+                    commit('Repeat', repeat)
+                    return Promise.resolve(repeat)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        RepeatBranch({commit}, json){
+            return reportsService.RepeatBranch(json.end, json.start, json.key, json.branch).then(
+                repeat => {
+                    commit('Repeat', repeat)
+                    return Promise.resolve(repeat)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
         Payments({commit}, key) {
             return reportsService.Payments(key).then(
                 payments => {
@@ -69,6 +123,19 @@ export const reports = {
 
         Org({commit}, key) {
             return reportsService.Org(key).then(
+                org => {
+                    commit('Org', org)
+                    return Promise.resolve(org)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+
+        OrgBranch({commit}, key) {
+            return reportsService.OrgBranch(key).then(
                 org => {
                     commit('Org', org)
                     return Promise.resolve(org)
@@ -102,6 +169,19 @@ export const reports = {
                 }
             )
         },
+
+
+        pastDueBranch({commit}, key) {
+            return reportsService.pastDueBranch(key).then(
+                pastdue => {
+                    commit('pastDue', pastdue)
+                    return Promise.resolve(pastdue)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
         getRequests({commit}, json) {
             return reportsService.getRequests(json.org_id, json.status_id, json.key).then(
                 requests => {
@@ -113,6 +193,67 @@ export const reports = {
                 }
             )
         },
+
+        Branch({commit}, key){
+            return reportsService.Branch(key).then(
+                branch => {
+                    commit('Branch', branch)
+                    return Promise.resolve(branch)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Branches({commit}, json){
+            return reportsService.Branches(json.key, json.branch).then(
+                branch => {
+                    commit('Branch', branch)
+                    return Promise.resolve(branch)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Types({commit}, json){
+            return reportsService.Types(json.end, json.start, json.key).then(
+                types => {
+                    commit('Types', types)
+                    return Promise.resolve(types)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        TypesBranch({commit}, json){
+            return reportsService.TypesBranch(json.end, json.start, json.key, json.branch).then(
+                types => {
+                    commit('Types', types)
+                    return Promise.resolve(types)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        TypesBranches({commit}, json){
+            return reportsService.TypesBranches(json.end, json.start, json.key, json.branch).then(
+                types => {
+                    commit('Types', types)
+                    return Promise.resolve(types)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
     },
 
     mutations:{
@@ -142,7 +283,15 @@ export const reports = {
         getRequests(state, requests) {
             state.requests = requests
         },
-        
+        Repeat(state, repeat) {
+            state.repeat = repeat
+        },
+        Branch(state, branch) {
+            state.branches = branch
+        },
+        Types(state, types) {
+            state.types = types
+        },
     
     }
 }

@@ -130,34 +130,65 @@ import { cloneDeep } from 'lodash'
                 
                 this.loading = true
                 var user = this.$store.state.auth.user
-                this.$store.dispatch('reports/Org', user.session.client.key).then(
-                    (org) => {
-                        
-                        this.orgs = org.org
-                        this.orgs.forEach(item =>{
+                if(this.$store.state.auth.user.session.staff.full_access === 1){
+                    this.$store.dispatch('reports/Org', user.session.client.key).then(
+                        (org) => {
                             
-                            item.range = cloneDeep(this.range) 
-                            item.chartOptions = cloneDeep(this.chartOptions)
-                            item.series = cloneDeep(this.series)
+                            this.orgs = org.org
+                            this.orgs.forEach(item =>{
+                                
+                                item.range = cloneDeep(this.range) 
+                                item.chartOptions = cloneDeep(this.chartOptions)
+                                item.series = cloneDeep(this.series)
+                                
+                            })
                             
-                        })
-                        
-                        this.loading = false
-                    },
-                    (error) => {
-                        
-                        this.message =
-                            (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        this.successful = false;
-                        alert(this.message)
-                        console.log(this.message)
-                        this.loading = false;
-                    }
-                )
+                            this.loading = false
+                        },
+                        (error) => {
+                            
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            alert(this.message)
+                            console.log(this.message)
+                            this.loading = false;
+                        }
+                    )
+                } else {
+                        this.$store.dispatch('reports/OrgBranch', user.session.client.key).then(
+                        (org) => {
+                            
+                            this.orgs = org.org
+                            this.orgs.forEach(item =>{
+                                
+                                item.range = cloneDeep(this.range) 
+                                item.chartOptions = cloneDeep(this.chartOptions)
+                                item.series = cloneDeep(this.series)
+                                
+                            })
+                            
+                            this.loading = false
+                        },
+                        (error) => {
+                            
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            alert(this.message)
+                            console.log(this.message)
+                            this.loading = false;
+                        }
+                    )
+                }
             },
 
             getPayments(org){
@@ -213,7 +244,7 @@ import { cloneDeep } from 'lodash'
         },
 
         mounted() {
-            document.title = "КСУ Отчето по оплате"
+            document.title = "КСУ Отчет по оплате"
             this.getOrgs();
             
          },
