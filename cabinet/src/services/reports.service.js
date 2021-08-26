@@ -142,6 +142,42 @@ class ReportsService {
             return response.data
         }) 
     }
+
+    Staff(key) {
+        return axios.get(API_URL + "staff?key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    StaffBranch(key, branch) {
+        return axios.get(API_URL + "staff/branch?key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    WriteOff(end, start, key) {
+        return axios.get(API_URL + "requestnomenclatura/writeoff?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    WriteOffStaff(end, start, key, staff) {
+        return axios.get(API_URL + "requestnomenclatura/writeoffstaff?to=" + end + "&from=" + start + "&key=" + key + "&staff=" + staff)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    WriteOffBranch(end, start, key, branch) {
+        return axios.get(API_URL + "requestnomenclatura/writeoffbranch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
 }
 
 export default new ReportsService()

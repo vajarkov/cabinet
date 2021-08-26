@@ -17,7 +17,9 @@ export const reports = {
         requests: {},
         repeat: {},
         branches: {},
-        types: {},     
+        types: {},
+        staff:{},
+        nomenclatura:{},     
     },
 
     actions: {
@@ -254,6 +256,67 @@ export const reports = {
             ) 
         },
 
+        Staff({commit}, key){
+            return reportsService.Staff(key).then(
+                staff => {
+                    commit('Staff', staff)
+                    return Promise.resolve(staff)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        StaffBranch({commit}, json){
+            return reportsService.StaffBranch(json.key, json.branch).then(
+                staff => {
+                    commit('Staff', staff)
+                    return Promise.resolve(staff)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        WriteOff({commit}, json){
+            return reportsService.WriteOff(json.end, json.start, json.key).then(
+                nomenclatura => {
+                    commit('Nomenclatura', nomenclatura)
+                    return Promise.resolve(nomenclatura)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        WriteOffStaff({commit}, json){
+            return reportsService.WriteOffStaff(json.end, json.start, json.key, json.staff).then(
+                nomenclatura => {
+                    commit('Nomenclatura', nomenclatura)
+                    return Promise.resolve(nomenclatura)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        WriteOffBranch({commit}, json){
+            return reportsService.TypesBranches(json.end, json.start, json.key, json.branch).then(
+                nomenclatura => {
+                    commit('Nomenclatura', nomenclatura)
+                    return Promise.resolve(nomenclatura)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+        
+
     },
 
     mutations:{
@@ -291,6 +354,12 @@ export const reports = {
         },
         Types(state, types) {
             state.types = types
+        },
+        Staff(state, staff) {
+            state.staff = staff
+        },
+        Nomenclatura(state, nomenclatura){
+            state.nomenclatura = nomenclatura
         },
     
     }

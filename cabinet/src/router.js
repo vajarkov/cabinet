@@ -12,6 +12,7 @@ import PastDue from "@/components/Pages/PastDue";
 import RequestsStatus from "@/components/Pages/RequestsStatus";
 import Repeat from "@/components/Pages/Repeat";
 import RequestTypes from "@/components/Pages/RequestTypes";
+import Nomenclatura from "@/components/Pages/Nomenclatura";
 
 const routes = [
   {
@@ -79,8 +80,13 @@ const routes = [
   },
   {
     path: "/reports/types",
-    name: "RepeatTypes",
+    name: "RequestTypes",
     component: RequestTypes,
+  },
+  {
+    path: "/reports/nomenclatura",
+    name: "Nomenclatura",
+    component: Nomenclatura,
   },
 
 ];

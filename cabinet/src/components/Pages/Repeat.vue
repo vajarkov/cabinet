@@ -38,6 +38,7 @@
                     <div class="card-body px-0 py-0">
                         <table class="table table-hover table-bordered"> 
                                 <thead class="text-light text-center" style="background:#276595;">
+                                    <th scope="col">Дата</th>
                                     <th scope="col">Адрес</th>
                                     <th scope="col">Кол-во</th>
                                     <th scope="col">Коментарий</th>
@@ -45,6 +46,7 @@
                                 </thead>
                                 <tbody v-for="request in repeat" :key="request.id">
                                     <tr>
+                                        <td>{{ request.datedoc }}</td>
                                         <td>{{ request.address }}</td>
                                         <th scope="row">{{ request.count }}</th>
                                         <td>{{ request.cmnt }}</td>
