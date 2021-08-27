@@ -90,7 +90,8 @@
                         <div v-for="staff in countByStaff" :key="staff.id">
                             <b>{{staff.name}}</b>
                             <p class="my-0">Выполнил {{ staff.done }} из {{ (parseInt(staff.work) + parseInt(staff.done)) }}</p>
-                            <p >Время последней заявки: {{staff.stamp}}</p>
+                            <p v-bind:style="[(Date.now() - Date.parse(staff.stamp)) > (3* 3600 * 1000) ? {'background-color': 'red'}:{'background-color': 'white'} ]">Время последней заявки: {{staff.stamp}}</p>
+                            
                         </div>
                     </div>
                 </div>
