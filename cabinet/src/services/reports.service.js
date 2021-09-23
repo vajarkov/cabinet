@@ -178,6 +178,20 @@ class ReportsService {
         }) 
     }
 
+    Residents(key) {
+        return axios.get(API_URL + "mcporch/residents?key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    ResidentsBranch(key, branch) {
+        return axios.get(API_URL + "mcporch/residentsbranch?key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
 }
 
 export default new ReportsService()

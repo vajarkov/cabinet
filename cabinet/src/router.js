@@ -13,6 +13,7 @@ import RequestsStatus from "@/components/Pages/RequestsStatus";
 import Repeat from "@/components/Pages/Repeat";
 import RequestTypes from "@/components/Pages/RequestTypes";
 import Nomenclatura from "@/components/Pages/Nomenclatura";
+import Residents from "@/components/Pages/Residents";
 
 const routes = [
   {
@@ -87,6 +88,11 @@ const routes = [
     path: "/reports/nomenclatura",
     name: "Nomenclatura",
     component: Nomenclatura,
+  },
+  {
+    path: "/reports/residents",
+    name: "Residents",
+    component: Residents,
   },
 
 ];

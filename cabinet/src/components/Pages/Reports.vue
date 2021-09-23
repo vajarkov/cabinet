@@ -135,6 +135,25 @@
                     </div>
                 </div>
 
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/residents" class="nav-link text-truncate">
+                                <i class="fs-5 bi-building" data-bs-toggle="tooltip" title="Списание"></i><span class="ms-2 d-sm-inline">Количество абонентов</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <ul>
+                                <li><small>Количество абонентов по филиалам и общее количество жильцов в домах, которые обслуживаются филиалом</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         

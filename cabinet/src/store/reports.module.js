@@ -19,7 +19,8 @@ export const reports = {
         branches: {},
         types: {},
         staff:{},
-        nomenclatura:{},     
+        nomenclatura:{},
+        residents:{},     
     },
 
     actions: {
@@ -315,6 +316,30 @@ export const reports = {
                 }
             ) 
         },
+
+        Residents({commit}, key){
+            return reportsService.Residents(key).then(
+                residents => {
+                    commit('Residents', residents)
+                    return Promise.resolve(residents)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        ResidentsBranch({commit}, json){
+            return reportsService.ResidentsBranch(json.key, json.branch).then(
+                residents => {
+                    commit('Residents', residents)
+                    return Promise.resolve(residents)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
         
 
     },
@@ -360,6 +385,10 @@ export const reports = {
         },
         Nomenclatura(state, nomenclatura){
             state.nomenclatura = nomenclatura
+        },
+
+        Residents(state, residents) {
+            state.residents = residents
         },
     
     }

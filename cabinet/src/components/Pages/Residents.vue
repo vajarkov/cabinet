@@ -1,21 +1,18 @@
 <template>
     <div>
-        <div v-show="Object.keys(pastdue).length!==0">
+        <div v-show="Object.keys(residents).length!==0">
             <table class="table table-hover table-bordered"> 
                     <thead class="text-light text-center" style="background:#276595;">
-                        <th scope="col">Номер</th>
-                        <th scope="col">Дата</th>
-                        <th scope="col">Адрес</th>
-                        <th scope="col">Коментарий</th>
-                        <th scope="col">Мастер</th>
+                        <th scope="col">Филиал</th>
+                        <th scope="col">Кол-во абонентов (кол-во клиентов)</th>
+                        <th scope="col">Кол-во жильцов (всего квартир в подъезде)</th>
+                        
                     </thead>
-                    <tbody v-for="request in pastdue" :key="request.id">
+                    <tbody v-for="resident in residents" :key="resident.id">
                         <tr>
-                            <th scope="row">{{ request.numdoc }}</th>
-                            <td>{{ request.datedoc }}</td>
-                            <td>{{ request.address }}</td>
-                            <td>{{ request.cmnt }}</td>
-                            <td>{{ request.name }}</td>
+                            <th scope="row">{{ resident.name }}</th>
+                            <td>{{ resident.abonents }}</td>
+                            <td>{{ resident.residents }}</td>
                             <!-- class="d-none d-lg-table-cell" -->
                         </tr>
                     </tbody>
@@ -35,13 +32,13 @@
 <script>
     
     export default {
-        name: "PastDue",
+        name: "Residents",
         
         data() {
 
             return {
                 
-                pastdue: {},
+                residents: {},
                 loading: false,
                 
                 
@@ -52,20 +49,19 @@
 
         
         mounted() {
-            document.title = "КСУ Просроченные заявки"
-            this.getPastDue();
+            document.title = "КСУ Количество абонентов и жильцов"
+            this.getResidents();
         },
 
 
         methods: {
-            getPastDue(){
+            getResidents(){
                 this.loading = true
                 var user = this.$store.state.auth.user
                 if(this.$store.state.auth.user.session.staff.full_access === 1){
-                    this.$store.dispatch('reports/pastDue', user.session.client.key).then(
-                        (pastdue) => {
-                            
-                            this.pastdue = pastdue.pastdue
+                    this.$store.dispatch('reports/Residents', user.session.client.key).then(
+                        (residents) => {
+                            this.residents = residents.data
                             this.loading = false
                             
                         },
@@ -83,10 +79,11 @@
                             }
                     )
                 } else {
-                    this.$store.dispatch('reports/pastDueBranch', user.session.client.key).then(
-                        (pastdue) => {
+                    let branch = this.$store.state.auth.user.session.branch.id
+                    this.$store.dispatch('reports/ResidentsBranch', {key:user.session.client.key, branch: branch}).then(
+                        (residents) => {
                             
-                            this.pastdue = pastdue.pastdue
+                            this.residents = residents.data
                             this.loading = false
                             
                         },

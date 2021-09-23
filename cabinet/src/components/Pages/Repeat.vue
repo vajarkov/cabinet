@@ -43,6 +43,7 @@
                                     <th scope="col">Кол-во</th>
                                     <th scope="col">Коментарий</th>
                                     <th scope="col">Категория</th>
+                                    <th scope="col">Мастер</th>
                                 </thead>
                                 <tbody v-for="request in repeat" :key="request.id">
                                     <tr>
@@ -51,7 +52,7 @@
                                         <th scope="row">{{ request.count }}</th>
                                         <td>{{ request.cmnt }}</td>
                                         <td>{{ request.name }}</td>
-                                        
+                                        <td>{{ request.staff }}</td>
                                     </tr>
                                 </tbody>
                         </table>
