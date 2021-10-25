@@ -18,9 +18,10 @@ export const reports = {
         repeat: {},
         branches: {},
         types: {},
-        staff:{},
-        nomenclatura:{},
-        residents:{},     
+        staff: {},
+        nomenclatura: {},
+        residents: {},
+        debtors: {},
     },
 
     actions: {
@@ -340,6 +341,30 @@ export const reports = {
                 }
             ) 
         },
+
+        Phones({commit}, key) {
+            return reportsService.Phones(key).then(
+                phones => {
+                    commit('Phones', phones)
+                    return Promise.resolve(phones)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Debtors({commit}, json) {
+            return reportsService.Debtors(json.key, json.branch, json.amount).then(
+                debtors => {
+                    commit('Debtors', debtors)
+                    return Promise.resolve(debtors)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        }
         
 
     },
@@ -351,7 +376,6 @@ export const reports = {
         },
         ReportView(state, data) {
             state.data = data
-            
         },
         RequestCount(state, counts){
             state.counts = counts
@@ -386,10 +410,16 @@ export const reports = {
         Nomenclatura(state, nomenclatura){
             state.nomenclatura = nomenclatura
         },
-
         Residents(state, residents) {
             state.residents = residents
         },
+        Phones(state, phones) {
+            state.phones = phones
+        },
+        Debtors(state, debtors) {
+            state.debtors = debtors
+        },
+
     
     }
 }

@@ -14,6 +14,8 @@ import Repeat from "@/components/Pages/Repeat";
 import RequestTypes from "@/components/Pages/RequestTypes";
 import Nomenclatura from "@/components/Pages/Nomenclatura";
 import Residents from "@/components/Pages/Residents";
+import Phones from "@/components/Pages/Phones";
+import Debtors from "@/components/Pages/Debtors";
 
 const routes = [
   {
@@ -93,6 +95,16 @@ const routes = [
     path: "/reports/residents",
     name: "Residents",
     component: Residents,
+  },
+  {
+    path: "/reports/phones",
+    name: "Phones",
+    component: Phones,
+  },
+  {
+    path: "/reports/debtors",
+    name: "Debtors",
+    component: Debtors,
   },
 
 ];

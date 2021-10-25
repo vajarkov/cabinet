@@ -158,7 +158,8 @@
                 start: false,
                 center: [],
                 full_access: 0,
-                
+                orderOrg: [1,16,71,73, 52,70, 7,72, 74, 75],
+                orderedOrg: {},
             }
         },
 
@@ -338,6 +339,7 @@
                     await this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
                         (data) => {
                             this.countByOrg = data.items
+                            this.mapOrder(this.countByOrg, this.orderOrg, "id")
                             this.counter --
                             
                         },
@@ -374,6 +376,22 @@
                     )
                 }
 
+            },
+
+            async mapOrder (array, order, key) {
+  
+                array.sort( function (a, b) {
+                    var A = a[key], B = b[key];
+    
+                    if (order.indexOf(A) > order.indexOf(B)) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+    
+                });
+  
+                return array;
             },
 
             async getCountByStaff(){

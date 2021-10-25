@@ -101,7 +101,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/types" class="nav-link text-truncate">
-                                <i class="fs-5 bi-ui-checks" data-bs-toggle="tooltip" title="Списание"></i><span class="ms-2 d-sm-inline">Категории</span> 
+                                <i class="fs-5 bi-ui-checks" data-bs-toggle="tooltip" title="Категории"></i><span class="ms-2 d-sm-inline">Категории</span> 
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -139,7 +139,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/residents" class="nav-link text-truncate">
-                                <i class="fs-5 bi-building" data-bs-toggle="tooltip" title="Списание"></i><span class="ms-2 d-sm-inline">Количество абонентов</span> 
+                                <i class="fs-5 bi-building" data-bs-toggle="tooltip" title="Количество абонентов"></i><span class="ms-2 d-sm-inline">Количество абонентов</span> 
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -148,6 +148,43 @@
                             <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
                             <ul>
                                 <li><small>Количество абонентов по филиалам и общее количество жильцов в домах, которые обслуживаются филиалом</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/phones" class="nav-link text-truncate">
+                                <i class="fs-5 bi-key" data-bs-toggle="tooltip" title="Пароли"></i><span class="ms-2 d-sm-inline">Пароли</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <ul>
+                                <li><small>телефоны зарегистрированных сервисников, со сгенерированными паролями</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/debtors" class="nav-link text-truncate">
+                                <i class="fs-5 bi-calendar-x" data-bs-toggle="tooltip" title="Неплательщики"></i><span class="ms-2 d-sm-inline">Неплательщики</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <ul>
+                                <li><small>количество неплательщиков по подъездам</small></li>
                             </ul>
                         </div>
                         </div>

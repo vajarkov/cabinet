@@ -210,11 +210,12 @@
                 this.$store.dispatch('reports/ReportView', {key:user.session.client.key, date:date, id:id}).then(
                     (data) => 
                     {   
+                        console.log(data)
                         this.data = data
                         this.data.detail.forEach(item => {
-                        this.distance.push([parseFloat(item.coord.ltd), parseFloat(item.coord.lng)]);
-                        if(item.action === "MOVE")
-                            this.timePeriod += item.period;
+                            this.distance.push([parseFloat(item.coord.ltd), parseFloat(item.coord.lng)]);
+                            if(item.action === "MOVE")
+                                this.timePeriod += item.period;
                         
                         })
                     },

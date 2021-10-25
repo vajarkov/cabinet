@@ -358,7 +358,7 @@ html {
     margin-right:0.5rem;
 }
 
- .overlay {
+.overlay {
     background-color: #EFEFEF;
     position: absolute;
     left: 50%;
@@ -367,7 +367,7 @@ html {
     transform: translate(-50%, -50%);
     opacity: .5;
     filter: alpha(opacity=50);
- }
+}
 
 #backdrop {
     background-color: #EFEFEF;

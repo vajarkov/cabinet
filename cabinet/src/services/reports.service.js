@@ -21,8 +21,6 @@ class ReportsService {
         })
     }
 
-
-
     ReportView(key, date, id){
         return axios.get(API_URL +"mobile/report/" + date + "/" + id + "?key=" + key)
         .then(response => {
@@ -190,6 +188,20 @@ class ReportsService {
         .then(response => {
             return response.data
         }) 
+    }
+
+    Phones(key) {
+        return axios.get(API_URL + "report/phones?key=" + key )
+        .then(response => {
+            return response.data
+        })
+    }
+
+    Debtors(key, branch, amount) {
+        return axios.get(API_URL + "report/debtors?key=" + key + "&branch=" + branch + "&amount=" + amount)
+        .then(response => {
+            return response.data
+        })
     }
 
 }
