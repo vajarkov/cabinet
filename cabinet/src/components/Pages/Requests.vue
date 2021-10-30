@@ -32,7 +32,7 @@
                 </template>
             </v-date-picker>
     
-            <button class="mx-5 w-25 h-10 text-light bg-primary" style="align:center" @click="requestCount">Получить данные</button>
+            <button class="mx-5 w-25 h-10 text-light" style="background:#276595;align:center;position: absolute; right: 0;height:30px;" @click="requestCount">Получить данные</button>
   
         </div>
         <div class="card-body">

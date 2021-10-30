@@ -38,7 +38,7 @@
                             <option  v-for="branch in branches" :key="branch.id" :value="branch" >{{branch.name}}</option>
                         </select>
                     
-                        <button class="mx-5 w-25 h-10 text-light bg-primary"  style="align:center" @click="getTypes()">Получить данные</button>
+                        <button class="mx-5 w-25 text-light"  style="background:#276595;align:center;position: absolute; right: 0;height:30px;" @click="getTypes()">Получить данные</button>
                     </div>
                     <div class="card-body px-0 py-0 my-0">
                         <table class="table table-hover table-bordered"> 

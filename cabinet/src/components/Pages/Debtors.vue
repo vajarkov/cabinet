@@ -12,7 +12,7 @@
                         <input class="mx-2" style="width:80px;height:30px;" v-model.number="amount" type="number"/>
                         <p class="mx-2" style="vertical-align:center">Количество квартир, %</p>
                         <input class="mx-2" style="width:50px;height:30px;" v-model.number="percent" type="number" />
-                        <button class="mx-2 w-145 text-light bg-primary"  style="align:center;position: absolute; right: 0;" @click="getDebtors()">Получить данные</button>
+                        <button class="mx-2 w-145 text-light" style="background:#276595;align:center;position: absolute; right: 0;" @click="getDebtors()">Получить данные</button>
                     </div>
                     <div class="card-body px-0 py-0 my-0">
                         <table class="table table-hover table-bordered"> 

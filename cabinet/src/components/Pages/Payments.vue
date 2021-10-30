@@ -35,7 +35,7 @@
                             </template>
                         </v-date-picker>
                     
-                        <button class="mx-5 w-25 h-10 text-light bg-primary" style="align:center" @click="getPayments(org)">Получить данные</button>
+                        <button class="mx-5 w-25 text-light" style="background:#276595;align:center;position: absolute; right: 0;height:30px;" @click="getPayments(org)">Получить данные</button>
                     </div>
                     <div class="card-body">
                         <apexchart width="95%" :options="org.chartOptions" :series="org.series"></apexchart>
@@ -47,13 +47,13 @@
 
 
        
-        <div id="backdrop" v-show="loading">    
+        <!--<div id="backdrop" v-show="loading">    
             <div class="overlay" >
-                <div class="spinner-grow text-primary"  style="width: 3rem; height: 3rem; justify-content: center; align-items: center;" role="status">
+                <div class="spinner-grow text-primary"  style="width:3rem; height:3rem;justify-content:center;align-items:center;" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-        </div> 
+        </div>--> 
     </div>
 </template>
 <script>

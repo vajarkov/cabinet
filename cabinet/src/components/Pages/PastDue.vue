@@ -5,16 +5,22 @@
                     <thead class="text-light text-center" style="background:#276595;">
                         <th scope="col">Номер</th>
                         <th scope="col">Дата</th>
+                        <th scope="col">Статус</th>
                         <th scope="col">Адрес</th>
-                        <th scope="col">Коментарий</th>
+                        <th scope="col">Комментарий</th>
+                        <th scope="col">Сообщение</th>
+                        <th scope="col">Статус</th>
                         <th scope="col">Мастер</th>
                     </thead>
                     <tbody v-for="request in pastdue" :key="request.id">
                         <tr>
                             <th scope="row">{{ request.numdoc }}</th>
                             <td>{{ request.datedoc }}</td>
+                            <td v-bind:style="[request.status_id == 1 ? {'color':'#0f9379'} : request.status_id == 2 ? {'color':'#f6bf62'} :  {'color':'black'}]">{{ request.status }}</td>
                             <td>{{ request.address }}</td>
                             <td>{{ request.cmnt }}</td>
+                            <td>{{ request.message }}</td>
+                            <td>{{ request.branch }}</td>
                             <td>{{ request.name }}</td>
                             <!-- class="d-none d-lg-table-cell" -->
                         </tr>

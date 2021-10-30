@@ -25,7 +25,7 @@
                 <option  v-for="phone in mobile" :key="phone.id" :value="phone" >{{phone.NAME}}</option>
             </select>
             
-            <button  class="mx-5 w-25 text-light bg-primary rounded" style="align:center" @click="reportView">Поучить данные</button>
+            <button  class="mx-5 w-25 text-light" style="align:center;background:#276595;" @click="reportView">Поучить данные</button>
         </div>
 
         <div class="card-body mx-0 my-0 px-0 py-0">
@@ -46,21 +46,21 @@
                 
                 <div class="col-sm-4 mx-0 ps-0" v-if="Object.keys(marker).length !== 0" >
                     <div class="card px-0 mx-0 my-0 py-0 h-100">
-                        <div class="card-header my-0 mx-0 text-center bg-primary">
+                        <div class="card-header my-0 mx-0 text-center" style="background:#276595;">
                             <i class="text-light fs-4">{{ marker.NAME }}</i>
                             <p class="text-light">{{ marker.stamp.toLocaleString() }}</p>
                         </div>
                         <div class="card-body">
-                            <p class="text-primary fs-4 text-center">Пройденное расстояние за {{ date.toLocaleString().slice(0,10) }}</p>
-                            <p class="text-primary fs-3 text-center">{{ data.distance }} км</p>
-                            <p class="text-primary fs-4 text-center">Время в пути</p>
-                            <p class="text-primary fs-3 text-center">{{ timePeriod.toFixed(2) }} мин.</p>
+                            <p class="fs-4 text-center" style="color:#276595;"> Пройденное расстояние за {{ date.toLocaleString().slice(0,10) }}</p>
+                            <p class="fs-3 text-center" style="color:#276595;">{{ data.distance }} км</p>
+                            <p class="fs-4 text-center" style="color:#276595;">Время в пути</p>
+                            <p class="fs-3 text-center" style="color:#276595;">{{ timePeriod.toFixed(2) }} мин.</p>
                         </div>
                     </div>
                             
                         </div>
                         <div v-else>
-                            <p class="text-info text-center">Выберите мастера</p>
+                            <p class="text-center" style="color:#276595;">Выберите мастера</p>
                         </div>
                 
                 
