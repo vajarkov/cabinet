@@ -193,8 +193,11 @@ import { cloneDeep } from 'lodash'
 
             getPayments(org){
                 var user = this.$store.state.auth.user
-                var start = org.range.start.getFullYear() + '-' + ('0' + (org.range.start.getMonth() + 1)).slice(-2) + '-' + ('0' + org.range.start.getDate()).slice(-2)
-                var end = org.range.end.getFullYear() + '-' + ('0' + (org.range.end.getMonth() + 2)).slice(-2) + '-' + ('0' + org.range.end.getDate()).slice(-2)
+                var start = (((org.range.start.getMonth() + 1) > 12 ? org.range.start.getFullYear() + 1 : org.range.start.getFullYear() ) + '-' + ((org.range.start.getMonth() + 1) > 12 ? ('0' + (12 -  org.range.start.getMonth())).slice(-2): ('0' + (org.range.start.getMonth() + 1)).slice(-2)) + '-' + ('0' + org.range.start.getDate()).slice(-2));
+                var end = (((org.range.end.getMonth() + 2) > 12 ? org.range.end.getFullYear()+1 : org.range.end.getFullYear()) + '-' + ((org.range.end.getMonth() + 2) > 12 ? ('0' + (12 -  org.range.end.getMonth())).slice(-2) : ('0' + (org.range.end.getMonth() + 2)).slice(-2))  + '-' + (('0' + org.range.end.getDate()).slice(-2)));
+                //console.log(('0' + (12 -  org.range.end.getMonth())))
+                //console.log(org.range.end.getMonth())
+                //console.log(('0' + (org.range.end.getMonth() + 2)).slice(-2))
                 org.chartOptions = {
                     noData: {
                         text: "Идет загрузка данных, подождите...",

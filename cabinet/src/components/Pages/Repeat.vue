@@ -32,7 +32,11 @@
                                 </div>
                             </template>
                         </v-date-picker>
-                    
+                        <select v-model="branch" class="form-select form-select-sm mx-2 px-2" aria-label=".form-select-sm example" 
+                            style="width:220px;height:25px;align:bottom;" aria-placeholder="Выберите подразделение" >
+                            <option  disabled value="" selected>Выберите подразделение...</option>
+                            <option  v-for="branch in branches" :key="branch.id" :value="branch" >{{branch.name}}</option>
+                        </select>
                         <button class="mx-5 w-25 text-light" style="background:#276595;align:center;position: absolute; right: 0;height:30px;" @click="getRepeat()">Получить данные</button>
                     </div>
                     <div class="card-body px-0 py-0">
@@ -70,20 +74,25 @@
                 repeat:{},
                 range: {
                     start: new Date(new Date().getFullYear(), new Date().getMonth(), new Date(1)),
-                    end: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
+                    end: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1),
                 },
+                branches:[],
+                branch: {},
             }
         },
 
         methods: {
             async getRepeat(){
-                
+                if (Object.keys(this.branch).length === 0){
+                    alert('Выберите подразделение')
+                    return 
+                }
                 this.loading = true
                 var user = this.$store.state.auth.user
-                var startDate = this.range.start.getFullYear() + '-' + ('0' + (this.range.start.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.start.getDate()).slice(-2)
-                var endDate = this.range.end.getFullYear() + '-' + ('0' + (this.range.end.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.end.getDate()).slice(-2)
-                if(this.$store.state.auth.user.session.staff.full_access === 1){
-                    
+                var startDate = (((this.range.start.getMonth() + 1) > 12 ? this.range.start.getFullYear() + 1 : this.range.start.getFullYear() ) + '-' + ((this.range.start.getMonth() + 1) > 12 ? ('0' + (12 -  this.range.start.getMonth())).slice(-2): ('0' + (this.range.start.getMonth() + 1)).slice(-2)) + '-' + ('0' + this.range.start.getDate()).slice(-2));//this.range.start.getFullYear() + '-' + ('0' + (this.range.start.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.start.getDate()).slice(-2)
+                var endDate = (((this.range.end.getMonth() + 1) > 12 ? this.range.end.getFullYear() + 1 : this.range.end.getFullYear()) + '-' + ((this.range.end.getMonth() + 1) > 12 ? ('0' + (12 - this.range.end.getMonth())).slice(-2) : ('0' + (this.range.end.getMonth() + 1)).slice(-2))  + '-' + (('0' + this.range.end.getDate()).slice(-2)));//this.range.end.getFullYear() + '-' + ('0' + (this.range.end.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.end.getDate()).slice(-2)
+                //if(this.$store.state.auth.user.session.staff.full_access === 1){
+                /*    
                     this.$store.dispatch('reports/Repeat', {end:endDate, start:startDate ,key:user.session.client.key}).then(
                         (repeat) => {
                             
@@ -104,15 +113,70 @@
                             console.log(this.message)
                             this.loading = false;
                         }
-                    )
-                } else {
-                        let branch = this.$store.state.auth.user.session.branch.id
+                    )*/
+                //} else {
+                        let branch = this.branch.id//this.$store.state.auth.user.session.branch.id
                         this.$store.dispatch('reports/RepeatBranch',  {end:endDate, start:startDate ,key:user.session.client.key, branch: branch}).then(
                         (repeat) => {
                             
                             this.repeat = repeat.data
                             
                             
+                            this.loading = false
+                        },
+                        (error) => {
+                            
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            alert(this.message)
+                            console.log(this.message)
+                            this.loading = false;
+                        }
+                    )
+                //}
+            },
+
+            async getBranches(){
+                this.loading = true
+                var user = this.$store.state.auth.user
+                if(this.$store.state.auth.user.session.staff.full_access === 1){
+                    
+                    this.$store.dispatch('reports/Branch', user.session.client.key).then(
+                        (branch) => {
+                            branch.branch.forEach(b =>{
+                                this.branches.push({id: b.id, name: b.name})
+                            })
+                            
+                            
+                            this.loading = false
+                        },
+                        (error) => {
+                            
+                            this.message =
+                                (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                            alert(this.message)
+                            console.log(this.message)
+                            this.loading = false;
+                        }
+                    )
+                } else {
+                        let branch_id = this.$store.state.auth.user.session.branch.id
+                        this.$store.dispatch('reports/Branches',  {key:user.session.client.key, branch: branch_id}).then(
+                        (branch) => {
+                            
+                            branch.branch.forEach(b =>{
+                                this.branches.push({id: b.id, name: b.name})
+                            })
                             this.loading = false
                         },
                         (error) => {
@@ -136,7 +200,11 @@
             document.title = "КСУ Повторяющиеся заявки"
             
             
-         },
+        },
+        beforeMount(){
+             this.getBranches()
+
+        },
     }
 </script>
 
