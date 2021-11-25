@@ -10,23 +10,36 @@
                         </select>
                         <p class="mx-2">Задолженность</p>
                         <input class="mx-2" style="width:80px;height:30px;" v-model.number="amount" type="number"/>
-                        <p class="mx-2" style="vertical-align:center">Количество квартир, %</p>
-                        <input class="mx-2" style="width:50px;height:30px;" v-model.number="percent" type="number" />
-                        <button class="mx-2 w-145 text-light" style="background:#276595;align:center;position: absolute; right: 0;" @click="getDebtors()">Получить данные</button>
+                        <!--<p class="mx-2" style="vertical-align:center">Количество квартир, %</p>
+                        <input class="mx-2" style="width:50px;height:30px;" v-model.number="percent" type="number" />-->
+                        <button class="mx-2 w-145 text-light" style="background:#276595;align:center;position: absolute; right: 0;" @click="getDebtorsList()">Получить данные</button>
                     </div>
                     <div class="card-body px-0 py-0 my-0">
                         <table class="table table-hover table-bordered"> 
                                 <thead class="text-light text-center" style="background:#276595;">
+                                    <th scope="col">Имя</th>
                                     <th scope="col">Адрес</th>
-                                    <th scope="col">Кол-во</th>
-                                    <th scope="col">Всего</th>
+                                    <th scope="col">Телефон</th>
+                                    <th scope="col">Долг</th>
+                                    <th scope="col">Лицевой счет</th>
+                                    <th scope="col">№ договора</th>
+                                    <th scope="col">Тип договора</th>
+                                    <th scope="col">Упр. компания</th>
+                                    
                                     
                                 </thead>
-                                <tbody v-for="debtor in debtors" :key="debtor.id">
-                                    <tr v-show="debtor.count_flats == 0 || debtor.count_flats == null || debtor.count * 100 / debtor.count_flats >= percent">
-                                        <th scope="row">{{ debtor.caption }}</th>
-                                        <td>{{ debtor.count }}</td>
-                                        <td>{{ debtor.count_flats }}</td>
+                                <tbody v-for="debtor in debtorslist" :key="debtor.id">
+                                    <tr>
+                                    <!--<tr v-show="debtor.count_flats == 0 || debtor.count_flats == null || debtor.count * 100 / debtor.count_flats >= percent"> -->
+                                        <th scope="row">{{ debtor.name }}</th>
+                                        <td>{{ debtor.cap }}</td>
+                                        <td>{{ debtor.phone }}</td>
+                                        <td>{{ debtor.amount }}</td>
+                                        <td>{{ debtor.pa }}</td>
+                                        <td>{{ debtor.docnum }}</td>
+                                        <td>{{ debtor.contract }}</td>
+                                        <td>{{ debtor.management }}</td>
+                                        
                                  
                                         
                                     </tr>
@@ -46,10 +59,10 @@
 
 <script>
     export default {
-        name: "Debtors",
+        name: "DebtorsList",
         data() {
             return {
-                debtors:{},
+                debtorslist:{},
                 
                 branches:[],
                 branch: {},
@@ -118,16 +131,16 @@
                 }
             },
 
-            async getDebtors(){
+            async getDebtorsList(){
                 if (Object.keys(this.branch).length === 0){
                     alert('Выберите подразделение')
                     return 
                 }
                 this.loading = true
                 var user = this.$store.state.auth.user
-                this.$store.dispatch('reports/Debtors', {key:user.session.client.key, branch: this.branch.id, amount: this.amount}).then(
-                    (debtors) => {
-                        this.debtors = debtors.debtors
+                this.$store.dispatch('reports/DebtorsList', {key:user.session.client.key, branch: this.branch.id, amount: this.amount}).then(
+                    (debtorslist) => {
+                        this.debtorslist = debtorslist.debtors
                         console.log(this.debtors)
                         this.loading = false
                     },
@@ -150,7 +163,7 @@
         },
 
         mounted() {
-            document.title = "КСУ Неплательщики (подъезды)"
+            document.title = "КСУ Неплательщики (абоненты)"
                         
          },
          beforeMount(){

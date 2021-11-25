@@ -204,6 +204,13 @@ class ReportsService {
         })
     }
 
+    DebtorsList(key, branch, amount) {
+        return axios.get(API_URL + "report/debtorslist?key=" + key + "&branch=" + branch + "&amount=" + amount)
+        .then(response => {
+            return response.data
+        })
+    }
+
 }
 
 export default new ReportsService()

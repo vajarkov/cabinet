@@ -22,6 +22,7 @@ export const reports = {
         nomenclatura: {},
         residents: {},
         debtors: {},
+        debtorslist: {},
     },
 
     actions: {
@@ -364,6 +365,18 @@ export const reports = {
                     return Promise.reject(error)
                 }
             )
+        },
+
+        DebtorsList({commit}, json) {
+            return reportsService.DebtorsList(json.key, json.branch, json.amount).then(
+                debtorslist => {
+                    commit('DebtorsList', debtorslist)
+                    return Promise.resolve(debtorslist)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
         }
         
 
@@ -418,6 +431,9 @@ export const reports = {
         },
         Debtors(state, debtors) {
             state.debtors = debtors
+        },
+        DebtorsList(state, debtorslist) {
+            state.debtorslist = debtorslist
         },
 
     

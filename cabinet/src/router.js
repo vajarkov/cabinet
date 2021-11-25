@@ -16,6 +16,7 @@ import Nomenclatura from "@/components/Pages/Nomenclatura";
 import Residents from "@/components/Pages/Residents";
 import Phones from "@/components/Pages/Phones";
 import Debtors from "@/components/Pages/Debtors";
+import DebtorsList from "@/components/Pages/DebtorsList";
 
 const routes = [
   {
@@ -105,6 +106,11 @@ const routes = [
     path: "/reports/debtors",
     name: "Debtors",
     component: Debtors,
+  },
+  {
+    path: "/reports/debtorslist",
+    name: "DebtorsList",
+    component: DebtorsList,
   },
 
 ];
