@@ -3,7 +3,7 @@
         <i class="fs-1 bi-laptop"></i><span class="fs-3 ms-1 d-none d-lg-inline">Доска</span>
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
-                <div class="card mb-3 mx-0 py-0">
+                <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
                     <div class="row g-0">
                         <div class="col-md-2">
                             <i class="fs-1 bi-box-arrow-in-left"></i>
@@ -304,8 +304,8 @@
                                 error.response.data.message) ||
                                 error.message ||
                                 error.toString();
-                            this.successful = false;
-                            this.counter --
+                                this.successful = false;
+                                this.counter --
                             }
 
                     )
@@ -324,8 +324,8 @@
                                 error.response.data.message) ||
                                 error.message ||
                                 error.toString();
-                            this.successful = false;
-                            this.counter --
+                                this.successful = false;
+                                this.counter --
                             }
 
                     )
@@ -333,14 +333,14 @@
                 
             },
             async getCountByOrg(){
-                this.counter ++
+                //this.counter ++
                 var user = this.$store.state.auth.user
                 if(this.full_access === 1){
                     await this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
                         (data) => {
                             this.countByOrg = data.items
                             this.mapOrder(this.countByOrg, this.orderOrg, "id")
-                            this.counter --
+                            //this.counter --
                             
                         },
                         (error) => {
@@ -351,7 +351,7 @@
                                 error.message ||
                                 error.toString();
                             this.successful = false;
-                            this.counter --
+                            //this.counter --
                             }
 
                     )
@@ -359,7 +359,7 @@
                         await this.$store.dispatch('dashboard/countByOrgBranch', user.session.client.key).then(
                         (data) => {
                             this.countByOrg = data.items
-                            this.counter --
+                            //this.counter --
                             
                         },
                         (error) => {
@@ -370,7 +370,7 @@
                                 error.message ||
                                 error.toString();
                             this.successful = false;
-                            this.counter --
+                            //this.counter --
                             }
 
                     )

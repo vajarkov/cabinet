@@ -10,8 +10,7 @@
                         </select>
                         <p class="mx-2">Задолженность</p>
                         <input class="mx-2" style="width:80px;height:30px;" v-model.number="amount" type="number"/>
-                        <!--<p class="mx-2" style="vertical-align:center">Количество квартир, %</p>
-                        <input class="mx-2" style="width:50px;height:30px;" v-model.number="percent" type="number" />-->
+                        <span v-show="Object.keys(debtorslist).length!==0" @click="exportExcel()"><font-awesome-icon  icon="file-excel" /></span>
                         <button class="mx-2 w-145 text-light" style="background:#276595;align:center;position: absolute; right: 0;" @click="getDebtorsList()">Получить данные</button>
                     </div>
                     <div class="card-body px-0 py-0 my-0">
@@ -58,6 +57,7 @@
 </template>
 
 <script>
+    import { saveExcel } from '@progress/kendo-vue-excel-export';
     export default {
         name: "DebtorsList",
         data() {
@@ -160,7 +160,30 @@
                     
                 
             },
+            exportExcel () {
+                const timeElapsed = Date.now();
+                const today = new Date(timeElapsed);
+                saveExcel({
+                    data: this.debtorslist,
+                    fileName: "Должники_"+ today.toISOString().slice(0,10),
+                    columns: [
+                        { field: 'name', title: "Имя"},
+                        { field: 'cap', title: 'Адрес' },
+                        { field: 'FORMALNAME', title:'Улица' },
+                        { field: 'HOUSENUM', title:'Дом' },
+                        { field: 'flat', title:'Квартира' },
+                        { field: 'phone', title: 'Телефон' },
+                        { field: 'amount', title: "Долг"},
+                        { field: 'pa', title: 'Лицевой счет' },
+                        { field: 'docnum', title: '№ договора' },
+                        { field: 'contract', title: "Тип договора"},
+                        { field: 'management', title: 'Упр. компания' }
+                    ]
+                });
+            },
         },
+
+
 
         mounted() {
             document.title = "КСУ Неплательщики (абоненты)"

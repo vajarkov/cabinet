@@ -69,7 +69,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>список просроченных заявок</small></li>
                             </ul>
@@ -88,7 +88,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>список абонентов, которые за выбранный период обращались несколько раз</small></li>
                             </ul>
@@ -107,7 +107,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>количество заявок по разным категориям</small></li>
                             </ul>
@@ -126,7 +126,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>материал, списанный мастерами при выполнении заявок</small></li>
                             </ul>
@@ -145,7 +145,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>Количество абонентов по филиалам и общее количество жильцов в домах, которые обслуживаются филиалом</small></li>
                             </ul>
@@ -164,9 +164,9 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
-                                <li><small>телефоны зарегистрированных сервисников, со сгенерированными паролями</small></li>
+                                <li><small>Телефоны зарегистрированных сервисников, со сгенерированными паролями</small></li>
                             </ul>
                         </div>
                         </div>
@@ -182,7 +182,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>количество неплательщиков по подъездам</small></li>
                             </ul>
@@ -201,7 +201,7 @@
                         <div class="card-body">
                             <div class="card-title"></div>
                         <div class="card-text"> 
-                            <p><small>Данный отчет поможет вам посмотреть посмотреть</small></p>
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>данные по неплательщикам</small></li>
                             </ul>

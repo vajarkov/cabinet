@@ -16,6 +16,13 @@
                             <!-- class="d-none d-lg-table-cell" -->
                         </tr>
                     </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Итого</th>
+                            <th scope="row">{{ count.abonents }}</th>
+                            <th scope="row">{{ count.residents }}</th>
+                        </tr>
+                    </tbody>
             </table>
 
         </div>
@@ -40,6 +47,10 @@
                 
                 residents: {},
                 loading: false,
+                count: {
+                    residents:0,
+                    abonents:0,
+                },
                 
                 
                 
@@ -55,13 +66,24 @@
 
 
         methods: {
+            
             getResidents(){
                 this.loading = true
+                this.count = {
+                    residents:0,
+                    abonents:0
+                }
                 var user = this.$store.state.auth.user
                 if(this.$store.state.auth.user.session.staff.full_access === 1){
                     this.$store.dispatch('reports/Residents', user.session.client.key).then(
                         (residents) => {
+                            
                             this.residents = residents.data
+                            for(let index = 0; index < this.residents.length; index++){
+                                this.count.residents += parseInt(this.residents[index].residents)
+                                this.count.abonents += parseInt(this.residents[index].abonents)
+                            }
+                            console.log(this.count)
                             this.loading = false
                             
                         },
@@ -84,6 +106,12 @@
                         (residents) => {
                             
                             this.residents = residents.data
+                            for(let index = 0; index < this.residents.length; index++){
+                                this.count.residents += parseInt(this.residents[index].residents)
+                                
+                                
+                                this.count.abonents += parseInt(this.residents[index].abonents)
+                            }
                             this.loading = false
                             
                         },

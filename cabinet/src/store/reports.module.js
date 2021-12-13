@@ -308,7 +308,7 @@ export const reports = {
         },
 
         WriteOffBranch({commit}, json){
-            return reportsService.TypesBranches(json.end, json.start, json.key, json.branch).then(
+            return reportsService.WriteOffBranch(json.end, json.start, json.key, json.branch).then(
                 nomenclatura => {
                     commit('Nomenclatura', nomenclatura)
                     return Promise.resolve(nomenclatura)

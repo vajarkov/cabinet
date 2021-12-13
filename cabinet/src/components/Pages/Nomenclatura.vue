@@ -37,8 +37,11 @@
                             <option  disabled value="" selected>Выберите сотрудника...</option>
                             <option  v-for="staff in staffs" :key="staff.id" :value="staff" >{{staff.name}}</option>
                         </select>
-                    
-                        <button class="mx-5 w-25 h-10 text-light"  style="background:#276595;align:center;position: absolute; right: 0;height:30px;" @click="getNomenclatura()">Получить данные</button>
+                        <span v-show="Object.keys(nomenclaturas).length!==0" @click="exportExcel()"><font-awesome-icon  icon="file-excel" /></span>
+                       
+                        
+                        <button class="mx-5 w-25 h-10 text-light"  style="background:#276595;align:center;position: absolute; right: 0;height:30px;" 
+                            @click="getNomenclatura()">Получить данные</button>
                     </div>
                     <div class="card-body px-0 py-0 my-0">
                         <table class="table table-hover table-bordered"> 
@@ -69,6 +72,7 @@
 </template>
 
 <script>
+    import { saveExcel } from '@progress/kendo-vue-excel-export';
     export default {
         name: "Nomenclatura",
         data() {
@@ -242,6 +246,20 @@
                         })
                     }
                 }
+            },
+
+            exportExcel () {
+                saveExcel({
+                    data: this.nomenclaturas,
+                    fileName: "Списание_"+ this.range.start.toISOString().slice(0,10) + "_" + this.range.end.toISOString().slice(0,10),
+                    columns: [
+                        { field: 'stamp', title: "Дата"},
+                        { field: 'staff', title: 'Мастер' },
+                        { field: 'address', title: 'Адрес' },
+                        { field: 'name', title: "Наименование"},
+                        { field: 'amount', title: 'Кол-во' }
+                    ]
+                });
             },
         }, 
         mounted() {

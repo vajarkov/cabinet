@@ -14,6 +14,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
     "@gabojkz/vue_moveable_v3": "0.0.3-semantically-released",
     "@popperjs/core": "^2.9.2",
+    "@progress/kendo-vue-excel-export": "^2.6.3",
     "@types/leaflet": "^1.7.4",
     "apexcharts": "^3.27.3",
     "axios": "^0.21.1",
