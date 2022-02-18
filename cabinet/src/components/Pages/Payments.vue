@@ -47,13 +47,7 @@
 
 
        
-        <!--<div id="backdrop" v-show="loading">    
-            <div class="overlay" >
-                <div class="spinner-grow text-primary"  style="width:3rem; height:3rem;justify-content:center;align-items:center;" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
-        </div>--> 
+        
     </div>
 </template>
 <script>

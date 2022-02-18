@@ -29,7 +29,7 @@
                                 </thead>
                                 <tbody v-for="debtor in debtorslist" :key="debtor.id">
                                     <tr>
-                                    <!--<tr v-show="debtor.count_flats == 0 || debtor.count_flats == null || debtor.count * 100 / debtor.count_flats >= percent"> -->
+                                    
                                         <th scope="row">{{ debtor.name }}</th>
                                         <td>{{ debtor.cap }}</td>
                                         <td>{{ debtor.phone }}</td>

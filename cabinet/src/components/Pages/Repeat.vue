@@ -90,31 +90,7 @@
                 this.loading = true
                 var user = this.$store.state.auth.user
                 var startDate = (((this.range.start.getMonth() + 1) > 12 ? this.range.start.getFullYear() + 1 : this.range.start.getFullYear() ) + '-' + ((this.range.start.getMonth() + 1) > 12 ? ('0' + (12 -  this.range.start.getMonth())).slice(-2): ('0' + (this.range.start.getMonth() + 1)).slice(-2)) + '-' + ('0' + this.range.start.getDate()).slice(-2));//this.range.start.getFullYear() + '-' + ('0' + (this.range.start.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.start.getDate()).slice(-2)
-                var endDate = (((this.range.end.getMonth() + 1) > 12 ? this.range.end.getFullYear() + 1 : this.range.end.getFullYear()) + '-' + ((this.range.end.getMonth() + 1) > 12 ? ('0' + (12 - this.range.end.getMonth())).slice(-2) : ('0' + (this.range.end.getMonth() + 1)).slice(-2))  + '-' + (('0' + this.range.end.getDate()).slice(-2)));//this.range.end.getFullYear() + '-' + ('0' + (this.range.end.getMonth() + 1)).slice(-2) + '-' + ('0' + this.range.end.getDate()).slice(-2)
-                //if(this.$store.state.auth.user.session.staff.full_access === 1){
-                /*    
-                    this.$store.dispatch('reports/Repeat', {end:endDate, start:startDate ,key:user.session.client.key}).then(
-                        (repeat) => {
-                            
-                            this.repeat = repeat.data
-                            
-                            this.loading = false
-                        },
-                        (error) => {
-                            
-                            this.message =
-                                (error.response &&
-                                error.response.data &&
-                                error.response.data.message) ||
-                                error.message ||
-                                error.toString();
-                            this.successful = false;
-                            alert(this.message)
-                            console.log(this.message)
-                            this.loading = false;
-                        }
-                    )*/
-                //} else {
+                var endDate = (((this.range.end.getMonth() + 1) > 12 ? this.range.end.getFullYear() + 1 : this.range.end.getFullYear()) + '-' + ((this.range.end.getMonth() + 1) > 12 ? ('0' + (12 - this.range.end.getMonth())).slice(-2) : ('0' + (this.range.end.getMonth() + 1)).slice(-2))  + '-' + (('0' + this.range.end.getDate()).slice(-2)));
                         let branch = this.branch.id//this.$store.state.auth.user.session.branch.id
                         this.$store.dispatch('reports/RepeatBranch',  {end:endDate, start:startDate ,key:user.session.client.key, branch: branch}).then(
                         (repeat) => {

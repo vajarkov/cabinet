@@ -17,6 +17,7 @@ import Residents from "@/components/Pages/Residents";
 import Phones from "@/components/Pages/Phones";
 import Debtors from "@/components/Pages/Debtors";
 import DebtorsList from "@/components/Pages/DebtorsList";
+import Omega from "@/components/Pages/Omega";
 
 const routes = [
   {
@@ -111,6 +112,11 @@ const routes = [
     path: "/reports/debtorslist",
     name: "DebtorsList",
     component: DebtorsList,
+  },
+  {
+    path: "/reports/omega",
+    name: "Omega",
+    component: Omega,
   },
 
 ];

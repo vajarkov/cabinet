@@ -108,8 +108,6 @@
                             this.residents = residents.data
                             for(let index = 0; index < this.residents.length; index++){
                                 this.count.residents += parseInt(this.residents[index].residents)
-                                
-                                
                                 this.count.abonents += parseInt(this.residents[index].abonents)
                             }
                             this.loading = false

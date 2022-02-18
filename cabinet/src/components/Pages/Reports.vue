@@ -209,6 +209,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/omega" class="nav-link text-truncate">
+                                <i class="fs-5 bi-file-earmark-excel-fill" data-bs-toggle="tooltip" title="Формироваие отчета Omega XXI"></i><span class="ms-2 d-sm-inline">Omega XXI</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данная страница поможет</small></p>
+                            <ul>
+                                <li><small>сформировать отчет для отправки в Omega списка абонетов с лицевыми счетами</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
