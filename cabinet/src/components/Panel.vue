@@ -7,8 +7,11 @@
         </div>
         <div class="offcanvas-body px-0">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu" >
-                <router-link  to="/dashboard" class="nav-link text-truncate" data-bs-dismiss="offcanvas">
-                    <i class="fs-5 bi-laptop"></i><span class="ms-1 d-none d-sm-inline">Доска</span>
+                <router-link  to="/service" class="nav-link text-truncate" data-bs-dismiss="offcanvas">
+                    <i class="fs-5 bi-laptop"></i><span class="ms-1 d-none d-sm-inline">Сервис</span>
+                </router-link>
+                <router-link  to="/montage" class="nav-link text-truncate" data-bs-dismiss="offcanvas">
+                    <i class="fs-5 bi-laptop"></i><span class="ms-1 d-none d-sm-inline">Монтаж</span>
                 </router-link>
                 <router-link  to="/reports" class="nav-link text-truncate" data-bs-dismiss="offcanvas">
                     <i class="fs-5 bi-journal-bookmark-fill"></i><span class="ms-1 d-none d-sm-inline">Отчеты</span> 

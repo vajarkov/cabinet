@@ -1,14 +1,15 @@
-import dashboardService from '@/services/dashboard.service'
+import montageService from '@/services/montage.service'
 
 //const user = JSON.parse(localStorage.getItem('user'))
 //const initialState = user ? {yesterday : {loggedIn: true} , user }: {status : {loggedIn: false}, user: null }
 
-export const dashboard = {
+export const montage = {
     namespaced: true,
     state: {
         yesterday: 0,
         countByStatus:{},
         countByOrg:{},
+        countByBranch:{},
         countByStaff: {},
         mobile: {}, 
                
@@ -17,7 +18,7 @@ export const dashboard = {
     actions: {
         yesterday({commit}, key) {
             
-            return dashboardService.yesterday(key).then(
+            return montageService.yesterday(key).then(
                 yesterday => {
                     
                     commit('yesterday', yesterday)
@@ -32,7 +33,7 @@ export const dashboard = {
 
         yesterdayByBranch({commit}, key) {
             
-            return dashboardService.yesterdayByBranch(key).then(
+            return montageService.yesterdayByBranch(key).then(
                 yesterday => {
                     
                     commit('yesterday', yesterday)
@@ -47,7 +48,7 @@ export const dashboard = {
 
         countByStatus({commit}, key) {
 
-            return dashboardService.countByStatus(key).then(
+            return montageService.countByStatus(key).then(
                 counts => {
                     
                     commit('countByStatus', counts)
@@ -62,7 +63,7 @@ export const dashboard = {
 
         countByStatusBranch({commit}, key) {
 
-            return dashboardService.countByStatusBranch(key).then(
+            return montageService.countByStatusBranch(key).then(
                 counts => {
                     
                     commit('countByStatus', counts)
@@ -75,10 +76,8 @@ export const dashboard = {
         },
 
         countByOrg({commit}, key) {
-
-            return dashboardService.countByOrg(key).then(
+            return montageService.countByOrg(key).then(
                 counts => {
-                   
                     commit('countByOrg', counts)
                     return Promise.resolve(counts)
                 },
@@ -89,10 +88,8 @@ export const dashboard = {
         },
 
         countByOrgBranch({commit}, key) {
-
-            return dashboardService.countByOrgBranch(key).then(
+            return montageService.countByOrgBranch(key).then(
                 counts => {
-                    
                     commit('countByOrg', counts)
                     return Promise.resolve(counts)
                 },
@@ -102,8 +99,32 @@ export const dashboard = {
             )
         },
 
+        countByBranch({commit}, key) {
+            return montageService.countByBranch(key).then(
+                counts => {
+                    commit('countByBranch', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        countByBranchBranch({commit}, key) {
+            return montageService.countByBranchBranch(key).then(
+                counts => {
+                    commit('countByBranch', counts)
+                    return Promise.resolve(counts)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
         countByStaff({commit}, key) {
-            return dashboardService.countByStaff(key).then(
+            return montageService.countByStaff(key).then(
                 counts => {
                     
                     commit('countByStaff', counts)
@@ -118,7 +139,7 @@ export const dashboard = {
         countByStaffBranch({commit}, json) {
             var branch = json['branch']
             var key = json['key']
-            return dashboardService.countByStaffBranch(key, branch).then(
+            return montageService.countByStaffBranch(key, branch).then(
                 counts => {
                     
                     commit('countByStaff', counts)
@@ -131,7 +152,7 @@ export const dashboard = {
         },
 
         Mobile({commit}, key) {
-            return dashboardService.Mobile(key).then(
+            return montageService.Mobile(key).then(
                 mobile => {
                     
                     commit('Mobile', mobile)
@@ -146,7 +167,7 @@ export const dashboard = {
         MobileBranch({commit}, json) {
             var key = json['key']
             var branch = json['branch']
-            return dashboardService.MobileBranch(key, branch).then(
+            return montageService.MobileBranch(key, branch).then(
                 mobile => {
                     
                     commit('Mobile', mobile)
@@ -171,6 +192,10 @@ export const dashboard = {
 
         countByOrg(state, counts) {
             state.countByOrg = counts.items
+        },
+
+        countByBranch(state, counts) {
+            state.countByBranch = counts.items
         },
 
         countByStaff(state, counts) {

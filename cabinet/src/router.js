@@ -2,7 +2,8 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import Login from "@/components/Pages/Login.vue";
 import Register from "@/components/Pages/Register.vue";
-import Dashboard from "@/components/Pages/Dashboard";
+import Service from "@/components/Pages/Service";
+import Montage from "@/components/Pages/Montage";
 import Reports from "@/components/Pages/Reports";
 import Tasks from "@/components/Pages/Tasks";
 import Staff from "@/components/Pages/Staff";
@@ -18,11 +19,12 @@ import Phones from "@/components/Pages/Phones";
 import Debtors from "@/components/Pages/Debtors";
 import DebtorsList from "@/components/Pages/DebtorsList";
 import Omega from "@/components/Pages/Omega";
+import Alseco from "@/components/Pages/Alseco";
 
 const routes = [
   {
     path: "/",
-    component: Dashboard,
+    component: Service,
   },
  
   {
@@ -35,13 +37,18 @@ const routes = [
   },
   {
     path: "/home",
-    name: "dashboard",
-    component: Dashboard,
+    name: "service",
+    component: Service,
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    component: Dashboard,
+    path: "/service",
+    name: "service",
+    component: Service,
+  },
+  {
+    path: "/montage",
+    name: "montage",
+    component: Montage,
   },
   {
     path: "/reports",
@@ -117,6 +124,11 @@ const routes = [
     path: "/reports/omega",
     name: "Omega",
     component: Omega,
+  },
+  {
+    path: "/reports/alseco",
+    name: "Alseco",
+    component: Alseco,
   },
 
 ];

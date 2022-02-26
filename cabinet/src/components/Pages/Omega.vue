@@ -91,6 +91,10 @@ export default {
       let index = 0;
       let result = [];
       this.collectionVD.forEach(vd => {
+        let docnum = vd['Дог'] + ""
+        while(docnum.length < 3) docnum = "0" + docnum
+        let datedoc = this.ExcelDateToJSDate(vd['Дата дог']).toLocaleString().slice(0,10)
+        let item = { N: index, pa: "", type: vd['Мкр'], address: vd['Название'], house: vd['Дом'], flat: vd['Кв'], rent: vd['Абон'], docnum: docnum, datedoc: datedoc };
         this.collectionOmega.forEach(omega => {
           
           if(vd['Мкр'].toString().toLowerCase() === omega['Тип адреса'].toString().toLowerCase()){
@@ -102,19 +106,18 @@ export default {
                 if(vd['Кв'].toString() === omega['Кв'].toString()){
                   index++
                   
-                  let docnum = vd['Дог'] + ""
-                  while(docnum.length < 3) docnum = "0" + docnum
-                  let datedoc = this.ExcelDateToJSDate(vd['Дата дог']).toLocaleString().slice(0,10)
                   
-                  let item = { N: index, pa: omega['ЛС'], type: omega['Тип адреса'], address: omega['Адрес'], house: vd['Дом'], flat: vd['Кв'], rent: vd['Абон'], docnum: docnum, datedoc: datedoc };
+                  item.pa = omega['ЛС']
+                  //let item = { N: index, pa: omega['ЛС'], type: omega['Тип адреса'], address: omega['Адрес'], house: vd['Дом'], flat: vd['Кв'], rent: vd['Абон'], docnum: docnum, datedoc: datedoc };
 
-                  result.push(item);
+                  //result.push(item);
                   //return;
                 }
               }
             }
           }
-        }) 
+        })
+        result.push(item); 
       })
       
       

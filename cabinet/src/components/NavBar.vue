@@ -9,7 +9,7 @@
     <ul class="d-flex">
       <div class="nav navbar-nav mr-auto mt-2">
         <li class="nav-item">
-          <router-link to="/dashboard" class="nav-link">
+          <router-link to="/service" class="nav-link">
             <font-awesome-icon icon="home" />Главная
           </router-link>
         </li>
@@ -30,7 +30,7 @@
 
       <div v-if="currentUser" class="navbar-nav ml-auto mt-2">
         <li class="nav-item d-flex">
-          <router-link to="/dashboard" class="nav-link">
+          <router-link to="/service" class="nav-link">
             <font-awesome-icon icon="user" />
             {{ currentUser.session.staff.name }}
           </router-link>

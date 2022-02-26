@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i class="fs-1 bi-laptop"></i><span class="fs-3 ms-1 d-none d-lg-inline">Доска</span>
+        <i class="fs-1 bi-laptop"></i><span class="fs-3 ms-1 d-none d-lg-inline">Монтажи</span>
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
                 <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
@@ -49,7 +49,7 @@
             </div>
             <div class="col">
                 <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
-                    <router-link class="text-decoration-none text-dark" to="/reports/pastdue">
+                    <!--<router-link class="text-decoration-none text-dark" to="/reports/pastdue">-->
                         <div class="row g-0">
                             <div class="col-md-2">
                                 <i class="fs-1 bi-clock" style="color: rgb(193, 52, 52);"></i>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                    </router-link>
+                    <!--</router-link>-->
                 </div>
             </div>
             <div class="col-sm-8">
@@ -85,9 +85,11 @@
             </div>
             <div class="col-sm-4">
                 <div v-show="Object.keys(countByStaff).length!==0" class="card px-0 py-0 mx-0 my-0">
+                    
                     <div class="card-header mx-0 my-0">Планы мастеров</div>
                     <div class="card-body scroll mx-0 my-0">
                         <div v-for="staff in countByStaff" :key="staff.id">
+
                             <b>{{staff.name}}</b>
                             <p class="my-0">Выполнил {{ staff.done }} из {{ (parseInt(staff.work) + parseInt(staff.done)) }}</p>
                             <p v-bind:style="[(Date.now() - Date.parse(staff.stamp)) > (3* 3600 * 1000) ? {'background-color': 'red'}:{'background-color': '#f8f9fa'} ]">Время последней заявки: {{staff.stamp}}</p>
@@ -96,25 +98,26 @@
                     </div>
                 </div>
             </div>
-            <div v-show="Object.keys(countByOrg).length!==0" class="col-sm-4" v-for="org in countByOrg" :key="org.name">
+            <div v-show="Object.keys(countByBranch).length!==0" class="col-sm-4" v-for="branch in countByBranch" :key="branch.name">
                 <div class="card px-0 py-0 mx-0 my-0">
                     <div >
-                        <div class="card-header">{{org.name}}</div>
+                        <div class="card-header">{{branch.name}}</div>
                         <div class="card-body">
-                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 1, name: org.name, status: 'Новые заявки' }}">
-                                <i class="fs-5 bi-box-arrow-in-up-left p-1" style="color:#0f9379;" data-bs-toggle="tooltip" title="Новые заявки"></i><span class="fs-5">{{ org.incoming }}</span>
-                            </router-link>
-                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 2, name: org.name, status: 'В работе' }}">
-                                <i class="fs-5 bi-gear p-1" style="color:#f6bf62;" data-bs-toggle="tooltip" title="В работе"></i><span class="fs-5">{{ org.work }}</span>
-                            </router-link>
-                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 3, name: org.name, status: 'Выполненные заявки'}}">
-                                <i class="fs-5 bi-check2-circle p-1" style="color: rgb(192, 192, 192);" data-bs-toggle="tooltip" title="Выполненные"></i><span class="fs-5">{{ org.done }}</span>
-                            </router-link>
-                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: org.id, status_id: 5, name: org.name, status: 'Отложенные заявки' }}">
-                                <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ org.rejected }}</span>
-                            </router-link>
-                            <i class='fs-5 bi-box-arrow-in-left p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.yesterday }}</span>
-                            <i class='fs-5 bi-clock p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ org.pastdue }}</span>
+                            <!--<router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 1, name: branch.name, status: 'Новые заявки' }}">-->
+                                <i class="fs-5 bi-box-arrow-in-up-left p-1" style="color:#0f9379;" data-bs-toggle="tooltip" title="Новые заявки"></i><span class="fs-5">{{ branch.incoming }}</span>
+                            <!--</router-link>-->
+                            <!--<router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 2, name: branch.name, status: 'В работе' }}">-->
+                                <i class="fs-5 bi-gear p-1" style="color:#f6bf62;" data-bs-toggle="tooltip" title="В работе"></i><span class="fs-5">{{ branch.work }}</span>
+                            <!--</router-link>-->
+                            <!--<router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 3, name: branch.name, status: 'Выполненные заявки'}}">-->
+                                <i class="fs-5 bi-check2-circle p-1" style="color: rgb(192, 192, 192);" data-bs-toggle="tooltip" title="Выполненные"></i><span class="fs-5">{{ branch.done }}</span>
+                            <!--</router-link>-->
+                            <!--
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 5, name: branch.name, status: 'Отложенные заявки' }}">-->
+                                <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ branch.rejected }}</span>
+                            <!--</router-link>-->
+                            <i class='fs-5 bi-box-arrow-in-left p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ branch.yesterday }}</span>
+                            <i class='fs-5 bi-clock p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ branch.pastdue }}</span>
                         </div>
                     </div>
                 </div>
@@ -135,7 +138,7 @@
 
 
     export default {
-        name: "Dashboard",
+        name: "Montage",
         components: {
                 LMap,
                 
@@ -151,14 +154,14 @@
                 yesterday: 0,
                 counter: 0,
                 countByStatus: {},
-                countByOrg: {},
+                countByBranch: {},
                 countByStaff: {},
                 mobile: {},
                 geojson: null,
                 start: false,
                 center: [],
                 full_access: 0,
-                orderOrg: [1,16,71,73, 52,70, 7,72, 74, 75],
+                //orderOrg: [1,16,71,73, 52,70, 7,72, 74, 75],
                 orderedOrg: {},
             }
         },
@@ -171,7 +174,7 @@
                 this.counter ++
                 var user = this.$store.state.auth.user
                 if(this.full_access === 1){
-                    await this.$store.dispatch('dashboard/Mobile', user.session.client.key).then(
+                    await this.$store.dispatch('montage/Mobile', user.session.client.key).then(
                         (data) => {
                             this.mobile = data.phones
                             this.mobile.forEach(phone => {
@@ -206,7 +209,7 @@
                     )
                 } else {
                     let branch = this.$store.state.auth.user.session.branch.id
-                    await this.$store.dispatch('dashboard/MobileBranch', {key:user.session.client.key, branch: branch}).then(
+                    await this.$store.dispatch('montage/MobileBranch', {key:user.session.client.key, branch: branch}).then(
                      (data) => {
                         this.mobile = data.phones
                         this.mobile.forEach(phone => {
@@ -245,7 +248,7 @@
                 this.counter ++
                 var user = this.$store.state.auth.user
                 if(this.full_access === 1){
-                    await this.$store.dispatch('dashboard/yesterday', user.session.client.key).then(
+                    await this.$store.dispatch('montage/yesterday', user.session.client.key).then(
                         (data) => {
                             this.yesterday = data.allCount
                             this.counter --
@@ -264,7 +267,7 @@
 
                 }
                 else{
-                    await this.$store.dispatch('dashboard/yesterdayByBranch', user.session.client.key).then(
+                    await this.$store.dispatch('montage/yesterdayByBranch', user.session.client.key).then(
                     (data) => {
                         this.yesterday = data.allCount
                         this.counter --
@@ -291,7 +294,7 @@
                 this.counter ++
                 var user = this.$store.state.auth.user
                 if(this.full_access === 1){
-                    await this.$store.dispatch('dashboard/countByStatus', user.session.client.key).then(
+                    await this.$store.dispatch('montage/countByStatus', user.session.client.key).then(
                         (data) => {
                             this.countByStatus = data.count
                             this.counter --
@@ -310,12 +313,10 @@
 
                     )
                 } else {
-                   await this.$store.dispatch('dashboard/countByStatusBranch', user.session.client.key).then(
+                   await this.$store.dispatch('montage/countByStatusBranch', user.session.client.key).then(
                         (data) => {
-                            
                             this.countByStatus = data.count
                             this.counter --
-                            
                         },
                         (error) => {
                             this.message =
@@ -332,14 +333,15 @@
                 }
                 
             },
-            async getCountByOrg(){
+            async getCountByBranch(){
                 //this.counter ++
                 var user = this.$store.state.auth.user
                 if(this.full_access === 1){
-                    await this.$store.dispatch('dashboard/countByOrg', user.session.client.key).then(
+                    await this.$store.dispatch('montage/countByBranch', user.session.client.key).then(
                         (data) => {
-                            this.countByOrg = data.items
-                            this.mapOrder(this.countByOrg, this.orderOrg, "id")
+                            console.log(data)
+                            this.countByBranch = data.items
+                            //this.mapOrder(this.countByBranch, this.orderOrg, "id")
                             //this.counter --
                             
                         },
@@ -356,9 +358,9 @@
 
                     )
                 }else{
-                        await this.$store.dispatch('dashboard/countByOrgBranch', user.session.client.key).then(
+                        await this.$store.dispatch('montage/countByBranchBranch', user.session.client.key).then(
                         (data) => {
-                            this.countByOrg = data.items
+                            this.countByBranch = data.items
                             //this.counter --
                             
                         },
@@ -378,29 +380,31 @@
 
             },
 
-            async mapOrder (array, order, key) {
+            // async mapOrder (array, order, key) {
   
-                array.sort( function (a, b) {
-                    var A = a[key], B = b[key];
+            //     array.sort( function (a, b) {
+            //         var A = a[key], B = b[key];
     
-                    if (order.indexOf(A) > order.indexOf(B)) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
+            //         if (order.indexOf(A) > order.indexOf(B)) {
+            //             return 1;
+            //         } else {
+            //             return -1;
+            //         }
     
-                });
+            //     });
   
-                return array;
-            },
+            //     return array;
+            // },
 
             async getCountByStaff(){
                 var user = this.$store.state.auth.user
                 this.counter ++
                  if(this.full_access === 1){
-                    await this.$store.dispatch('dashboard/countByStaff', user.session.client.key).then(
+                    await this.$store.dispatch('montage/countByStaff', user.session.client.key).then(
                         (data) => {
+
                             this.countByStaff = data.data
+                            console.log(this.countByStaff)
                             this.counter --
                             
                         },
@@ -419,7 +423,7 @@
                     )
                  }else {
                     let branch = this.$store.state.auth.user.session.branch.id
-                    await this.$store.dispatch('dashboard/countByStaffBranch', {key: user.session.client.key, branch: branch  }).then(
+                    await this.$store.dispatch('montage/countByStaffBranch', {key: user.session.client.key, branch: branch  }).then(
                     (data) => {
                         this.countByStaff = data.data
                         this.counter --
@@ -486,13 +490,13 @@
             
         },
         mounted() {
-            document.title = "КСУ Доска"
+            document.title = "КСУ Монтажи"
             setTimeout(function() { window.dispatchEvent(new Event('resize')) }, 250);
             
             
                 this.getYesterday();
                 this.getCountByStatus();
-                this.getCountByOrg();
+                this.getCountByBranch();
                 this.getCountByStaff();
                 this.initMarkers();
             
