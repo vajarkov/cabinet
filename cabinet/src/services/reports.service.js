@@ -106,6 +106,13 @@ class ReportsService {
         }) 
     }
 
+    getMontages(branch, status, key) {
+        return axios.get(API_URL + "reports/montage/branchstatus/" + branch + "/" + status +  "?key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
     Branch(key){
         return axios.get(API_URL + "branch?key=" + key)
         .then(response => {
@@ -176,6 +183,7 @@ class ReportsService {
         }) 
     }
 
+    
     Residents(key) {
         return axios.get(API_URL + "mcporch/residents?key=" + key)
         .then(response => {

@@ -28,7 +28,7 @@
 
 <script>
 import { XlsxRead, XlsxJson } from "../../../node_modules/vue3-xlsx/dist/vue3-xlsx.cjs.prod.js";
-//import { saveExcel } from '@progress/kendo-vue-excel-export';
+import { saveExcel } from '@progress/kendo-vue-excel-export';
 export default {
     name: "Alseco",
     components: {
@@ -93,23 +93,25 @@ export default {
       this.collectionVD.forEach(vd => {
         //let docnum = vd['Дог'] + ""
         //while(docnum.length < 3) docnum = "0" + docnum
-        let datedoc = this.ExcelDateToJSDate(vd['Дата']).toLocaleString().slice(0,10)
-        let item = { pa: "", address: vd['Улица'], house: vd['Дом'],  flat: vd['Кв'], amount: vd['Сумма долга'], datedoc: datedoc, };
+        console.log(vd)
+        //let datedoc = this.ExcelDateToJSDate(vd['Дата']).toLocaleString().slice(0,10)
+        let item = { pa: "", address: vd['Улица'], house: vd['Дом'],  flat: vd['Квартира'], amount: vd['Сумма долга'], rent: vd['Значение тарифа'] };
+        console.log(item)
         this.collectionAlseco.forEach(alseco => {
           
           //if(vd['Мкр'].toString().toLowerCase() === alseco['Тип адреса'].toString().toLowerCase()){
             
-            if(vd['Улица'].toString().toLowerCase() === alseco['Наименование улицы'].toString().toLowerCase()){
+            if(vd['Улица'].toString().toLowerCase().replace(/['"]+/g, '') === alseco['Наименование улицы'].toString().toLowerCase().replace(/['"]+/g, '')){
               //console.log(vd['Улица'].toString().toLowerCase())
               //console.log(alseco['Наименование улицы'].toString().toLowerCase())
               console.log(vd['Дом'])
               console.log(alseco['Номер дома'])
-              if(vd['Дом'].toString().toLowerCase() === alseco['Номер дома'].toString().toLowerCase()){//  .replace(/['"]+/g, '')){
+              if(vd['Дом'].toString().toLowerCase().replace(/['"]+/g, '') === alseco['Номер дома'].toString().toLowerCase().replace(/['"]+/g, '')){//  .replace(/['"]+/g, '')){
                 console.log(vd['Дом'])
                 console.log(alseco['Номер дома'])
-                if(vd['Кв'].toString() === alseco['Номер квартиры'].toString()){
+                if(vd['Квартира'].toString() === alseco['Номер квартиры'].toString()){
                   //index++
-                  console.log(vd['Кв'])
+                  console.log(vd['Квартира'])
                   console.log(alseco['Номер квартиры'])
                   
                   item.pa = alseco['Лицевой счет']
@@ -126,24 +128,25 @@ export default {
       })
       
       console.log(result)
-      //const timeElapsed = Date.now();
-      //const today = new Date(timeElapsed);
-      // saveExcel({
-      //               data: result,
-      //               fileName: "Абоненты_"+ today.toISOString().slice(0,10),
-      //               columns: [
+      const timeElapsed = Date.now();
+      const today = new Date(timeElapsed);
+      saveExcel({
+                     data: result,
+                     fileName: "Абоненты_"+ today.toISOString().slice(0,10),
+                     columns: [
       //                   { field: 'N', title: "№"},
-      //                   { field: 'pa', title: 'ЛС' },
+                         { field: 'pa', title: 'ЛС' },
       //                   { field: 'type', title:'Тип адреса' },
-      //                   { field: 'address', title:'Адрес' },
-      //                   { field: 'house', title:'Дом' },
-      //                   { field: 'flat', title:'Квартира' },
-      //                   { field: 'rent', title: 'Оплата' },
+                         { field: 'address', title:'Улица' },
+                         { field: 'house', title:'Дом' },
+                         { field: 'flat', title:'Квартира' },
+                         { field: 'rent', title: 'Оплата' },
+                         { field: 'amount', title: 'Долг' }
       //                   { field: 'docnum', title: '№ договора' },
       //                   { field: 'datedoc', title: 'Дата договора' },
                        
-      //               ]
-      //           });
+                     ]
+                 });
       
     },
     

@@ -62,7 +62,7 @@
                 <div class="col">
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
-                            <router-link  to="/reports/pastdue" class="nav-link text-truncate">
+                            <router-link  to="/reports/pastdueservice" class="nav-link text-truncate">
                                 <i class="fs-5 bi-clock" data-bs-toggle="tooltip" title="Просроченные заявки"></i><span class="ms-2 d-sm-inline">Просроченные заявки</span> 
                             </router-link>
                         </div>
@@ -119,8 +119,8 @@
                 <div class="col">
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
-                            <router-link  to="/reports/nomenclatura" class="nav-link text-truncate">
-                                <i class="fs-5 bi-cart-check" data-bs-toggle="tooltip" title="Списание"></i><span class="ms-2 d-sm-inline">Списание</span> 
+                            <router-link  to="/reports/nomenclaturaservice" class="nav-link text-truncate">
+                                <i class="fs-5 bi-cart-check" data-bs-toggle="tooltip" title="Списание (Сервис)"></i><span class="ms-2 d-sm-inline">Списание (Сервис)</span> 
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -129,6 +129,25 @@
                             <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
                             <ul>
                                 <li><small>материал, списанный мастерами при выполнении заявок</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/nomenclaturamontage" class="nav-link text-truncate">
+                                <i class="fs-5 bi-cart-check" data-bs-toggle="tooltip" title="Списание (Монтаж)"></i><span class="ms-2 d-sm-inline">Списание (Монтаж)</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
+                            <ul>
+                                <li><small>материал, списанный мастерами при выполнении монтажей</small></li>
                             </ul>
                         </div>
                         </div>

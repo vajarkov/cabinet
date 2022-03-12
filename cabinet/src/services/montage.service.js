@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const API_URL = 'https://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // // 'https://api.ksu.vashdomofon.kz/'//  //
 
-class DashboardService {
+class MontageService {
     yesterday(key){
         
         return axios.get(API_URL + "montage/stats/yesterday?key=" + key)
@@ -105,7 +105,41 @@ class DashboardService {
         })
     }
 
+    pastDue(key) {
+        return axios.get(API_URL + "reports/montage/pastdue?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
+    pastDueBranch(key) {
+        return axios.get(API_URL + "reports/montage/pastduebranch?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
+    WriteOff(end, start, key) {
+        return axios.get(API_URL + "report/writeoff?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    WriteOffStaff(end, start, key, staff) {
+        return axios.get(API_URL + "report/writeoffstaff?to=" + end + "&from=" + start + "&key=" + key + "&staff=" + staff)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    WriteOffBranch(end, start, key, branch) {
+        return axios.get(API_URL + "report/writeoffbranch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
     
 }
 
-export default new DashboardService()
+export default new MontageService()

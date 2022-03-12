@@ -9,11 +9,14 @@ import Tasks from "@/components/Pages/Tasks";
 import Staff from "@/components/Pages/Staff";
 import Requests from "@/components/Pages/Requests";
 import Payments from "@/components/Pages/Payments";
-import PastDue from "@/components/Pages/PastDue";
+import PastDueService from "@/components/Pages/PastDueService";
+import PastDueMontage from "@/components/Pages/PastDueMontage";
 import RequestsStatus from "@/components/Pages/RequestsStatus";
+import MontagesStatus from "@/components/Pages/MontagesStatus";
 import Repeat from "@/components/Pages/Repeat";
 import RequestTypes from "@/components/Pages/RequestTypes";
-import Nomenclatura from "@/components/Pages/Nomenclatura";
+import ServiceNomenclatura from "@/components/Pages/NomenclaturaService";
+import MontageNomenclatura from "@/components/Pages/NomenclaturaMontage";
 import Residents from "@/components/Pages/Residents";
 import Phones from "@/components/Pages/Phones";
 import Debtors from "@/components/Pages/Debtors";
@@ -76,14 +79,24 @@ const routes = [
     component: Payments,
   },
   {
-    path: "/reports/pastdue",
-    name: "pastdue",
-    component: PastDue,
+    path: "/reports/pastdueservice",
+    name: "pastdueservice",
+    component: PastDueService,
+  },
+  {
+    path: "/reports/pastduemontage",
+    name: "pastduemontage",
+    component: PastDueMontage,
   },
   {
     path: "/requests/:org_id/:status_id/:name/:status",
     name: "requestsStatus",
     component: RequestsStatus,
+  },
+  {
+    path: "/montages/:branch_id/:status_id/:name/:status",
+    name: "montagesStatus",
+    component: MontagesStatus,
   },
   {
     path: "/reports/repeat",
@@ -96,9 +109,14 @@ const routes = [
     component: RequestTypes,
   },
   {
-    path: "/reports/nomenclatura",
-    name: "Nomenclatura",
-    component: Nomenclatura,
+    path: "/reports/nomenclaturaservice",
+    name: "NomenclaturaService",
+    component: ServiceNomenclatura,
+  },
+  {
+    path: "/reports/nomenclaturamontage",
+    name: "NomenclaturaMontage",
+    component: MontageNomenclatura,
   },
   {
     path: "/reports/residents",

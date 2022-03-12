@@ -41,7 +41,7 @@
 <script>
     
     export default {
-        name: "PastDue",
+        name: "PastDueService",
         
         data() {
 
@@ -68,7 +68,8 @@
                 this.loading = true
                 var user = this.$store.state.auth.user
                 if(this.$store.state.auth.user.session.staff.full_access === 1){
-                    this.$store.dispatch('reports/pastDue', user.session.client.key).then(
+                    
+                    this.$store.dispatch('service/pastDue', user.session.client.key).then(
                         (pastdue) => {
                             
                             this.pastdue = pastdue.pastdue
@@ -89,7 +90,7 @@
                             }
                     )
                 } else {
-                    this.$store.dispatch('reports/pastDueBranch', user.session.client.key).then(
+                    this.$store.dispatch('service/pastDueBranch', user.session.client.key).then(
                         (pastdue) => {
                             
                             this.pastdue = pastdue.pastdue

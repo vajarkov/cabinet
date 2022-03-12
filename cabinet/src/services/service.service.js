@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const API_URL = 'https://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // // 'https://api.ksu.vashdomofon.kz/'//  //
 
-class DashboardService {
+class ServiceService {
     yesterday(key){
         
         return axios.get(API_URL + "request/stats/yesterday?key=" + key)
@@ -81,6 +81,20 @@ class DashboardService {
         })
     }
 
+    pastDue(key) {
+        return axios.get(API_URL + "reports/request/pastdue?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
+    pastDueBranch(key) {
+        return axios.get(API_URL + "reports/request/pastduebranch?key=" + key)
+        .then(response => {
+            return response.data
+        })
+    }
+
     MobileBranch(key, branch) {
         
         return axios.get(API_URL + "mobile/branch?key=" + key + '&branch=' + branch )
@@ -92,4 +106,4 @@ class DashboardService {
     
 }
 
-export default new DashboardService()
+export default new ServiceService()

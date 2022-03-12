@@ -74,7 +74,7 @@
 <script>
     import { saveExcel } from '@progress/kendo-vue-excel-export';
     export default {
-        name: "Nomenclatura",
+        name: "NomenclaturaService",
         data() {
             return {
                 requests:{},

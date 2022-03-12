@@ -11,7 +11,9 @@ export const montage = {
         countByOrg:{},
         countByBranch:{},
         countByStaff: {},
-        mobile: {}, 
+        mobile: {},
+        pastdue: {},
+        nomenclatura: {}, 
                
     },
 
@@ -177,9 +179,69 @@ export const montage = {
                     return Promise.reject(error)
                 }
             )
-        }
+        },
+        pastDue({commit}, key) {
+            return montageService.pastDue(key).then(
+                pastdue => {
+                    commit('pastDue', pastdue)
+                    return Promise.resolve(pastdue)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+    
+    
+        pastDueBranch({commit}, key) {
+            return montageService.pastDueBranch(key).then(
+                pastdue => {
+                    commit('pastDue', pastdue)
+                    return Promise.resolve(pastdue)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+        WriteOff({commit}, json){
+            return montageService.WriteOff(json.end, json.start, json.key).then(
+                nomenclatura => {
+                    commit('Nomenclatura', nomenclatura)
+                    return Promise.resolve(nomenclatura)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        WriteOffStaff({commit}, json){
+            return montageService.WriteOffStaff(json.end, json.start, json.key, json.staff).then(
+                nomenclatura => {
+                    commit('Nomenclatura', nomenclatura)
+                    return Promise.resolve(nomenclatura)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+    
     },
 
+    WriteOffBranch({commit}, json){
+        return montageService.WriteOffBranch(json.end, json.start, json.key, json.branch).then(
+            nomenclatura => {
+                commit('Nomenclatura', nomenclatura)
+                return Promise.resolve(nomenclatura)
+            },
+            error => {
+                return Promise.reject(error)
+            }
+        ) 
+    },
+   
     mutations:{
         yesterday(state, yesterday){
             state.yesterday = yesterday.allCount
@@ -203,6 +265,12 @@ export const montage = {
         },
         Mobile(state, mobile){
             state.mobile = mobile.phones
-        }
+        },
+        pastDue(state, pastdue) {
+            state.pastdue = pastdue
+        },
+        Nomenclatura(state, nomenclatura){
+            state.nomenclatura = nomenclatura
+        },
     }
 }

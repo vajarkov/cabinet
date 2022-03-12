@@ -10,8 +10,9 @@ export const service = {
         countByStatus:{},
         countByOrg:{},
         countByStaff: {},
-        mobile: {}, 
-               
+        mobile: {},
+        pastdue: {}, 
+              
     },
 
     actions: {
@@ -156,9 +157,36 @@ export const service = {
                     return Promise.reject(error)
                 }
             )
-        }
+        },
+        pastDue({commit}, key) {
+            return Service.pastDue(key).then(
+                pastdue => {
+                    commit('pastDue', pastdue)
+                    return Promise.resolve(pastdue)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+    
+    
+        pastDueBranch({commit}, key) {
+            return Service.pastDueBranch(key).then(
+                pastdue => {
+                    commit('pastDue', pastdue)
+                    return Promise.resolve(pastdue)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+    
     },
 
+    
+    
     mutations:{
         yesterday(state, yesterday){
             state.yesterday = yesterday.allCount
@@ -178,6 +206,9 @@ export const service = {
         },
         Mobile(state, mobile){
             state.mobile = mobile.phones
-        }
+        },
+        pastDue(state, pastdue) {
+            state.pastdue = pastdue
+        },
     }
 }

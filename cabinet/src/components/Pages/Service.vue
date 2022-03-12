@@ -49,7 +49,7 @@
             </div>
             <div class="col">
                 <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
-                    <router-link class="text-decoration-none text-dark" to="/reports/pastdue">
+                    <router-link class="text-decoration-none text-dark" to="/reports/pastdueservice">
                         <div class="row g-0">
                             <div class="col-md-2">
                                 <i class="fs-1 bi-clock" style="color: rgb(193, 52, 52);"></i>

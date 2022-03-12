@@ -23,6 +23,7 @@ export const reports = {
         residents: {},
         debtors: {},
         debtorslist: {},
+        montages: {},
     },
 
     actions: {
@@ -192,6 +193,18 @@ export const reports = {
                 requests => {
                     commit('getRequests', requests)
                     return Promise.resolve(requests)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+        getMontages({commit}, json) {
+            return reportsService.getMontages(json.branch_id, json.status_id, json.key).then(
+                montages => {
+                    
+                    commit('getMontages', montages)
+                    return Promise.resolve(montages)
                 },
                 error => {
                     return Promise.reject(error)
@@ -407,6 +420,9 @@ export const reports = {
         },
         getRequests(state, requests) {
             state.requests = requests
+        },
+        getMontages(state, montages) {
+            state.montages = montages
         },
         Repeat(state, repeat) {
             state.repeat = repeat

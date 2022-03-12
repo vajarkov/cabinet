@@ -9,7 +9,7 @@
                             <i class="fs-1 bi-box-arrow-in-left"></i>
                         </div>
                         <div class="col-md-10">
-                            <div class="card-body">
+                            <div  class="card-body">
                                 <p class="card-title">Со вчера</p>
                                 <h4 class="card-text">{{ yesterday }}</h4>
                             </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="col">
                 <div v-show="Object.keys(countByStatus).length!==0" class="card mb-3 mx-0 py-0">
-                    <!--<router-link class="text-decoration-none text-dark" to="/reports/pastdue">-->
+                    <router-link class="text-decoration-none text-dark" to="/reports/pastduemontage">
                         <div class="row g-0">
                             <div class="col-md-2">
                                 <i class="fs-1 bi-clock" style="color: rgb(193, 52, 52);"></i>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                    <!--</router-link>-->
+                    </router-link>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -103,19 +103,19 @@
                     <div >
                         <div class="card-header">{{branch.name}}</div>
                         <div class="card-body">
-                            <!--<router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 1, name: branch.name, status: 'Новые заявки' }}">-->
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'montagesStatus' , params:  { branch_id: branch.id, status_id: 1, name: branch.name, status: 'Новые заявки' }}">
                                 <i class="fs-5 bi-box-arrow-in-up-left p-1" style="color:#0f9379;" data-bs-toggle="tooltip" title="Новые заявки"></i><span class="fs-5">{{ branch.incoming }}</span>
-                            <!--</router-link>-->
-                            <!--<router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 2, name: branch.name, status: 'В работе' }}">-->
+                            </router-link>
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'montagesStatus' , params:  { branch_id: branch.id, status_id: 2, name: branch.name, status: 'В работе' }}"> 
                                 <i class="fs-5 bi-gear p-1" style="color:#f6bf62;" data-bs-toggle="tooltip" title="В работе"></i><span class="fs-5">{{ branch.work }}</span>
-                            <!--</router-link>-->
-                            <!--<router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 3, name: branch.name, status: 'Выполненные заявки'}}">-->
+                            </router-link>
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'montagesStatus' , params:  { branch_id: branch.id, status_id: 3, name: branch.name, status: 'Выполненные заявки'}}">
                                 <i class="fs-5 bi-check2-circle p-1" style="color: rgb(192, 192, 192);" data-bs-toggle="tooltip" title="Выполненные"></i><span class="fs-5">{{ branch.done }}</span>
-                            <!--</router-link>-->
-                            <!--
-                            <router-link class="text-decoration-none text-dark" :to="{ name: 'requestsStatus' , params:  { org_id: branch.id, status_id: 5, name: branch.name, status: 'Отложенные заявки' }}">-->
+                            </router-link>
+                            
+                            <router-link class="text-decoration-none text-dark" :to="{ name: 'montagesStatus' , params:  { branch_id: branch.id, status_id: 5, name: branch.name, status: 'Отложенные заявки' }}">
                                 <i class="fs-5 bi-reply p-1" data-bs-toggle="tooltip" title="Отложенные"></i><span class="fs-5">{{ branch.rejected }}</span>
-                            <!--</router-link>-->
+                            </router-link>
                             <i class='fs-5 bi-box-arrow-in-left p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ branch.yesterday }}</span>
                             <i class='fs-5 bi-clock p-1' style='color:#da1631;' data-bs-toggle="tooltip" data-bs-html="true" title="Со вчера"></i><span class="fs-5">{{ branch.pastdue }}</span>
                         </div>
@@ -250,6 +250,7 @@
                 if(this.full_access === 1){
                     await this.$store.dispatch('montage/yesterday', user.session.client.key).then(
                         (data) => {
+
                             this.yesterday = data.allCount
                             this.counter --
                         },
@@ -339,8 +340,9 @@
                 if(this.full_access === 1){
                     await this.$store.dispatch('montage/countByBranch', user.session.client.key).then(
                         (data) => {
-                            console.log(data)
+                            console.log()
                             this.countByBranch = data.items
+                            console.log(this.countByBranch);
                             //this.mapOrder(this.countByBranch, this.orderOrg, "id")
                             //this.counter --
                             
@@ -404,7 +406,7 @@
                         (data) => {
 
                             this.countByStaff = data.data
-                            console.log(this.countByStaff)
+                            
                             this.counter --
                             
                         },
