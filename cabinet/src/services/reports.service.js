@@ -148,15 +148,15 @@ class ReportsService {
         }) 
     }
 
-    Staff(key) {
-        return axios.get(API_URL + "staff?key=" + key)
+    Staff(key, filter) {
+        return axios.get(API_URL + "staff?key=" + key + filter)
         .then(response => {
             return response.data
         }) 
     }
 
-    StaffBranch(key, branch) {
-        return axios.get(API_URL + "staff/branch?key=" + key + "&branch=" + branch)
+    StaffBranch(key, branch, filter) {
+        return axios.get(API_URL + "staff/branch?key=" + key + "&branch=" + branch + filter)
         .then(response => {
             return response.data
         }) 
@@ -204,6 +204,28 @@ class ReportsService {
             return response.data
         })
     }
+
+    Percent(key, branch) {
+        return axios.get(API_URL + "report/percent?key=" + key + "&branch=" + branch)
+        .then(responce => {
+            return responce.data
+        })
+    }
+
+    Internet(key, branch) {
+        return axios.get(API_URL + "report/internet?key=" + key + "&branch=" + branch)
+        .then(responce => {
+            return responce.data
+        })
+    }
+
+    Internets(key) {
+        return axios.get(API_URL + "internet/list?key=" + key)
+        .then(responce => {
+            return responce.data
+        })
+    }
+
 
     Debtors(key, branch, amount) {
         return axios.get(API_URL + "report/debtors?key=" + key + "&branch=" + branch + "&amount=" + amount)

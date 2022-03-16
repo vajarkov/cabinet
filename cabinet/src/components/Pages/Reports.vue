@@ -264,6 +264,42 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/percent" class="nav-link text-truncate">
+                                <i class="fs-5 bi-percent" data-bs-toggle="tooltip" title="Формироваие отчета о количестве абонентов"></i><span class="ms-2 d-sm-inline">Процент абонентов в подъездах</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
+                            <ul>
+                                <li><small>Количество абонентов в подъезде и их процент в каждом подъезде</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/internet" class="nav-link text-truncate">
+                                <i class="fs-5 bi-server" data-bs-toggle="tooltip" title="Формироваие отчета наличии Интернет"></i><span class="ms-2 d-sm-inline">Наличие Интернет в подъезде</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
+                            <ul>
+                                <li><small>Наличие Интернет в подъезде</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

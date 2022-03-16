@@ -2,12 +2,13 @@
     <div>
         
         <div v-show="Object.keys(montages).length!==0">
-           
+           <span v-show="Object.keys(montages).length!==0" @click="exportExcel()"><font-awesome-icon  icon="file-excel" /></span>
                     <table class="table table-hover table-bordered caption-top">
                         <caption>{{name}}({{status}})</caption>
                         <thead class="text-light text-center" style="background:#276595;">
                             <th scope="col">Номер</th>
                             <th scope="col">Дата</th>
+                            <th scope="col">Тип</th>
                             <th scope="col">Адрес</th>
                             <th scope="col">Коментарий</th>
                             <th scope="col">Мастер</th>
@@ -17,6 +18,7 @@
                             <tr>
                                 <th scope="row">{{ montage.numdoc }}</th>
                                 <td>{{ montage.datedoc }}</td>
+                                <td>{{ montage.type }}</td>
                                 <td>{{ montage.address }}</td>
                                 <td>{{ montage.cmnt }}</td>
                                 <td >{{ montage.name }}</td>
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+    import { saveExcel } from '@progress/kendo-vue-excel-export';
     import { useRoute } from "vue-router";
     export default {
         name: 'MontagesStatus',
@@ -78,6 +81,22 @@
                         console.log(this.message)
                         }
                 )
+            },
+            exportExcel () {
+                const timeElapsed = Date.now();
+                const today = new Date(timeElapsed);
+                saveExcel({
+                    data: this.montages,
+                    fileName: "Монтажи_"+ today.toISOString().slice(0,10),
+                    columns: [
+                        { field: 'numdoc', title: 'Номер' },
+                        { field: 'datedoc', title:'Дата' },
+                        { field: 'type', title:'Тип' },
+                        { field: 'address', title:'Адрес' },
+                        { field: 'cmnt', title:'Коментарий' },
+                        { field: 'name', title:'Мастер' },
+                    ]
+                });
             },
         },
         mounted() {

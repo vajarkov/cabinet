@@ -6,7 +6,7 @@ import reportsService from '@/services/reports.service'
 export const reports = {
     namespaced: true,
     state: {
-       
+        porches:{},
         phones: {},
         data: {},
         counts: {},
@@ -24,6 +24,7 @@ export const reports = {
         debtors: {},
         debtorslist: {},
         montages: {},
+        internet: {},
     },
 
     actions: {
@@ -272,8 +273,8 @@ export const reports = {
             ) 
         },
 
-        Staff({commit}, key){
-            return reportsService.Staff(key).then(
+        Staff({commit}, json){
+            return reportsService.Staff(json.key, json.filter).then(
                 staff => {
                     commit('Staff', staff)
                     return Promise.resolve(staff)
@@ -285,7 +286,7 @@ export const reports = {
         },
 
         StaffBranch({commit}, json){
-            return reportsService.StaffBranch(json.key, json.branch).then(
+            return reportsService.StaffBranch(json.key, json.branch, json.filter).then(
                 staff => {
                     commit('Staff', staff)
                     return Promise.resolve(staff)
@@ -361,6 +362,42 @@ export const reports = {
                 phones => {
                     commit('Phones', phones)
                     return Promise.resolve(phones)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Percent({commit}, json) {
+            return reportsService.Percent(json.key, json.branch).then(
+                porches => {
+                    commit('Porches', porches)
+                    return Promise.resolve(porches)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Internet({commit}, json) {
+            return reportsService.Internet(json.key, json.branch).then(
+                porches => {
+                    commit('Porches', porches)
+                    return Promise.resolve(porches)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            )
+        },
+
+        Internets({commit}, json) {
+            return reportsService.Internets(json.key).then(
+                internet => {
+                    commit('Internet', internet)
+                    return Promise.resolve(internet)
                 },
                 error => {
                     return Promise.reject(error)
@@ -451,7 +488,12 @@ export const reports = {
         DebtorsList(state, debtorslist) {
             state.debtorslist = debtorslist
         },
-
+        Porches(state, porches){
+            state.porches = porches
+        },
+        Internet(state, internet){
+            state.internet = internet
+        },
     
     }
 }

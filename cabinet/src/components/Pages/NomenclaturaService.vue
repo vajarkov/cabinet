@@ -97,7 +97,7 @@
                 var user = this.$store.state.auth.user
                 if(this.$store.state.auth.user.session.staff.full_access === 1){
                     
-                    this.$store.dispatch('reports/Staff', user.session.client.key).then(
+                    this.$store.dispatch('reports/Staff', { key:user.session.client.key, filter: "&filter=is_mobile:1"}).then(
                         (staff) => {
                             staff.staff.forEach(s =>{
                                 this.staffs.push({id: s.id, name: s.name})
@@ -122,7 +122,7 @@
                     )
                 } else {
                         let branch_id = this.$store.state.auth.user.session.branch.id
-                        this.$store.dispatch('reports/StaffBranch',  {key:user.session.client.key, branch: branch_id}).then(
+                        this.$store.dispatch('reports/StaffBranch',  {key:user.session.client.key, branch: branch_id, filter: "&filter=is_mobile:1"}).then(
                         (staff) => {
                             
                             staff.staff.forEach(s =>{
