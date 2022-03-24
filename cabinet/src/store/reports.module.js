@@ -25,6 +25,7 @@ export const reports = {
         debtorslist: {},
         montages: {},
         internet: {},
+        invoice: {},
     },
 
     actions: {
@@ -333,6 +334,42 @@ export const reports = {
             ) 
         },
 
+        Invoice({commit}, json){
+            return reportsService.Invoice(json.end, json.start, json.key).then(
+                invoice => {
+                    commit('Invoice', invoice)
+                    return Promise.resolve(invoice)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        InvoiceStaff({commit}, json){
+            return reportsService.InvoiceStaff(json.end, json.start, json.key, json.staff).then(
+                invoice => {
+                    commit('Invoice', invoice)
+                    return Promise.resolve(invoice)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
+        InvoiceBranch({commit}, json){
+            return reportsService.InvoiceBranch(json.end, json.start, json.key, json.branch).then(
+                invoice => {
+                    commit('Invoice', invoice)
+                    return Promise.resolve(invoice)
+                },
+                error => {
+                    return Promise.reject(error)
+                }
+            ) 
+        },
+
         Residents({commit}, key){
             return reportsService.Residents(key).then(
                 residents => {
@@ -493,6 +530,9 @@ export const reports = {
         },
         Internet(state, internet){
             state.internet = internet
+        },
+        Invoice(state, invoice){
+            state.invoice = invoice
         },
     
     }

@@ -286,7 +286,7 @@
                     <div class="card px-0 mx-0 py-0 h-75">
                         <div class="card-header">
                             <router-link  to="/reports/internet" class="nav-link text-truncate">
-                                <i class="fs-5 bi-server" data-bs-toggle="tooltip" title="Формироваие отчета наличии Интернет"></i><span class="ms-2 d-sm-inline">Наличие Интернет в подъезде</span> 
+                                <i class="fs-5 bi-server" data-bs-toggle="tooltip" title="Формироваие отчета наличия Интернет"></i><span class="ms-2 d-sm-inline">Наличие Интернет в подъезде</span> 
                             </router-link>
                         </div>
                         <div class="card-body">
@@ -300,6 +300,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="card px-0 mx-0 py-0 h-75">
+                        <div class="card-header">
+                            <router-link  to="/reports/invoice" class="nav-link text-truncate">
+                                <i class="fs-5 bi-cart-plus" data-bs-toggle="tooltip" title="Формироваие отчета по накладным"></i><span class="ms-2 d-sm-inline">Накладные</span> 
+                            </router-link>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title"></div>
+                        <div class="card-text"> 
+                            <p><small>Данный отчет поможет вам посмотреть и проверить</small></p>
+                            <ul>
+                                <li><small>Данные по накладным по филиалам и сотрудникам</small></li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>

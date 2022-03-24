@@ -25,6 +25,7 @@ import Omega from "@/components/Pages/Omega";
 import Alseco from "@/components/Pages/Alseco";
 import Percent from "@/components/Pages/Percent";
 import Internet from "@/components/Pages/Internet";
+import Invoice from "@/components/Pages/Invoice";
 
 const routes = [
   {
@@ -159,6 +160,11 @@ const routes = [
     path: "/reports/internet",
     name: "Internet",
     component: Internet,
+  },
+  {
+    path: "/reports/invoice",
+    name: "Invoice",
+    component: Invoice,
   },
 
 ];

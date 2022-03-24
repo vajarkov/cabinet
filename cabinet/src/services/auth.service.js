@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as sha256 from 'sha256'
 
 const API_URL = 'https://api.ksu.vashdomofon.kz/web/'// //'https://api.ksu.vashdomofon.kz/web/' //'http://192.168.1.181/web/' //  //
-
+//const API_URL = 'http://192.168.1.181/web/'
 class AuthService {
     login(user){
         //pass = ssh

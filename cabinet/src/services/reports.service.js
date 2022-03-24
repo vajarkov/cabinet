@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 const API_URL = 'https://api.ksu.vashdomofon.kz/' // 'http://192.168.1.181/' // // 'https://api.ksu.vashdomofon.kz/'//  //
+//const API_URL =  'http://192.168.1.181/' // // 'https://api.ksu.vashdomofon.kz/'//  //
 
 class ReportsService {
    
@@ -178,6 +179,27 @@ class ReportsService {
 
     WriteOffBranch(end, start, key, branch) {
         return axios.get(API_URL + "requestnomenclatura/writeoffbranch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    Invoice(end, start, key) {
+        return axios.get(API_URL + "reports/invoice?to=" + end + "&from=" + start + "&key=" + key)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    InvoiceStaff(end, start, key, staff) {
+        return axios.get(API_URL + "reports/invoice/staff?to=" + end + "&from=" + start + "&key=" + key + "&staff=" + staff)
+        .then(response => {
+            return response.data
+        }) 
+    }
+
+    InvoiceBranch(end, start, key, branch) {
+        return axios.get(API_URL + "reports/invoice/branch?to=" + end + "&from=" + start + "&key=" + key + "&branch=" + branch)
         .then(response => {
             return response.data
         }) 
